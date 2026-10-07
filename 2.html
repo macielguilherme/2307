@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DocZ • Storage V3 Interativo</title>
+<style>
+/* ==========================================================================
+   DESIGN SYSTEM SOS DOCS - PADRÃO DOCZ SENTINELA
+   ========================================================================== */
+
+:root{
+  --bg:#f4f7f9;
+  --panel:#fff;
+  --line:#d0d0d0;
+  --line2:#e9ecef;
+  --ink:#333;
+  --ink-strong:#2c363f;
+  --muted:#6c757d;
+  --blue:#0d6efd;
+  --blue-hover:#0b5ed7;
+  --blue-border:#0b5ed7;
+  --blue-soft:#e8f2fc;
+  --nav:#2c363f;
+  --nav-line:#1c262b;
+  --nav-div:#39454f;
+  --warn:#92400e;
+  --warn-bg:#fef3c7;
+  --warn-border:#fcd34d;
+  --ok:#03543f;
+  --ok-bg:#def7ec;
+  --ok-border:#84e1bc;
+  --danger:#9f352b;
+  --danger-bg:#fde8e8;
+  --danger-border:#f8b4b4;
+  --soft:#f5f6f8;
+  --soft-row:#f8f9fa;
+}
+
+*{box-sizing:border-box}
+html{font-size:16px}
+body{
+  margin:0;
+  font-family:'Segoe UI', Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:0.85rem;
+  padding-top:45px;
+  line-height:1.4;
+}
+button,select,input{font:inherit}
+
+/* ==========================================================================
+   TOP NAV - IDÊNTICA AO SENTINELA
+   ========================================================================== */
+.topNav{
+  background:var(--nav);
+  color:#eee;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1030;
+  height:34px;
+  border-bottom:1px solid var(--nav-line);
+}
+.topNav .wrapper{
+  position:relative;
+  margin:0 2%;
+  height:34px;
+}
+.topNav .userNav{
+  float:right;
+  font-size:11px;
+  height:34px;
+}
+.topNav .userNav ul{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  border-right:1px solid var(--nav-div);
+  height:34px;
+}
+.topNav .userNav ul li{
+  border-left:1px solid var(--nav-div);
+  border-right:1px solid var(--nav-line);
+  display:flex;
+  align-items:center;
+  height:34px;
+}
+.topNav .userNav ul li span,
+.topNav .userNav ul li a{
+  padding:0 14px;
+  color:#eee;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  height:100%;
+  font-size:11px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.topNav .userNav ul li a:hover{
+  background:rgba(255,255,255,0.08);
+}
+.topNav .clearfix::after{
+  content:"";
+  clear:both;
+  display:table;
+}
+
+/* ==========================================================================
+   CONTAINER 90% (SEM max-width) + GRID 12 COLUNAS
+   ========================================================================== */
+.page-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+  width:90%;
+  margin:0 auto;
+  padding:15px 0 26px;
+}
+
+/* ==========================================================================
+   BREADCRUMB
+   ========================================================================== */
+.breadcrumb{
+  grid-column:span 12;
+  background:transparent;
+  padding:0;
+  margin:0;
+  font-size:0.775rem;
+  color:var(--muted);
+}
+.breadcrumb b{color:var(--ink-strong)}
+
+/* ==========================================================================
+   CABEÇALHO DA PÁGINA - 12/12
+   ========================================================================== */
+.page-head{
+  grid-column:span 12;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.page-head h1{
+  font-size:1.25rem;
+  margin:0 0 .25rem;
+  color:var(--ink-strong);
+  font-weight:600;
+}
+.subtitle{
+  color:var(--muted);
+  font-size:0.85rem;
+}
+.admin-actions{display:flex;gap:8px}
+
+/* ==========================================================================
+   BOTÕES - IDÊNTICOS AO SENTINELA
+   ========================================================================== */
+.btn-sos{
+  border:1px solid #ccc;
+  background:#f5f5f5;
+  color:#333;
+  font-weight:600;
+  font-size:0.825rem;
+  padding:6px 16px;
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.15s;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  text-decoration:none;
+  line-height:1;
+}
+.btn-sos:hover{
+  background:#e8e8e8;
+  border-color:#aaa;
+}
+.btn-sos-primary{
+  border-color:var(--blue-border);
+  background:var(--blue);
+  color:#fff;
+}
+.btn-sos-primary:hover{
+  background:var(--blue-hover);
+  border-color:#0a58ca;
+  color:#fff;
+}
+.btn-sos-success{
+  border-color:#3a7a5a;
+  background:#e8f5ee;
+  color:#2a5a3a;
+}
+.btn-sos-success:hover{
+  background:#d4ece0;
+  border-color:#2a5a3a;
+  color:#2a5a3a;
+}
+.btn-sos-outline-secondary{
+  border-color:#ced4da;
+  background:#fff;
+  color:#495057;
+}
+.btn-sos-outline-secondary:hover{
+  background:#f8f9fa;
+  border-color:#adb5bd;
+  color:#495057;
+}
+.btn-sos-sm{
+  padding:3px 10px;
+  font-size:0.7rem;
+}
+.btn-sos:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+/* ==========================================================================
+   CARDS / PAINÉIS
+   ========================================================================== */
+.filter-card,
+.table-panel,
+.kpi-section,
+.meta-strip{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:4px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+
+/* ==========================================================================
+   FILTROS - 12/12 COM 2 LINHAS HORIZONTAIS
+   ========================================================================== */
+.filter-card{
+  grid-column:span 12;
+  padding:1rem 1.25rem;
+}
+.filter-row{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+  align-items:end;
+}
+.filter-row .field:nth-child(1){grid-column:span 3}
+.filter-row .field:nth-child(2){grid-column:span 3}
+.filter-row .field:nth-child(3){grid-column:span 2}
+.filter-row .field:nth-child(4){grid-column:span 2}
+.filter-row .field:nth-child(5){grid-column:span 2}
+.filter-row .field:nth-child(6){grid-column:span 3}
+.filter-row .field.period-field{grid-column:span 5}
+.filter-row .filter-actions-inline{
+  grid-column:span 4;
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+  gap:8px;
+}
+
+.advanced{
+  display:none;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed var(--line);
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+.advanced.open{display:grid}
+.advanced .field{grid-column:span 4}
+
+.field label{
+  display:block;
+  font-size:0.65rem;
+  font-weight:700;
+  color:#495057;
+  margin-bottom:5px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+.field select,
+.field input{
+  width:100%;
+  height:34px;
+  border:1px solid #ced4da;
+  border-radius:4px;
+  background:#fff;
+  padding:0 10px;
+  color:var(--ink-strong);
+  font-size:0.75rem;
+  transition:all .15s ease-in-out;
+  outline:none;
+}
+.field select:focus,
+.field input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(13,110,253,.15);
+}
+.date-range{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+
+.filter-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
+  border-top:1px solid var(--line2);
+  padding-top:10px;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.help{color:var(--muted);font-size:0.7rem}
+.help b{color:#495057}
+.help .pending{color:var(--warn);font-weight:700}
+.adv-link{color:var(--blue);font-weight:600;cursor:pointer;font-size:0.75rem}
+.adv-link:hover{text-decoration:underline}
+
+.applied{
+  margin-top:10px;
+  background:var(--soft);
+  border:1px solid var(--line2);
+  padding:8px 10px;
+  border-radius:4px;
+  color:#59687a;
+  font-size:0.7rem;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.applied strong{color:var(--ink-strong)}
+
+/* ==========================================================================
+   KPI SECTIONS - 6/6 LADO A LADO
+   ========================================================================== */
+.kpi-section{
+  grid-column:span 6;
+}
+.kpi-section.full{grid-column:span 12}
+.kpi-title{
+  padding:.65rem 1.25rem;
+  border-bottom:1px solid var(--line);
+  font-weight:600;
+  background:var(--soft);
+  color:var(--ink-strong);
+  font-size:0.9rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.kpi-title-left{display:flex;align-items:center;gap:7px}
+.kpi-break{font-size:0.65rem;color:var(--muted);font-weight:400;text-align:right}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:0;
+}
+.kpi-grid .kpi{grid-column:span 4}
+.kpi-grid.two .kpi{grid-column:span 6}
+.kpi{
+  padding:12px 14px;
+  border-right:1px solid var(--line2);
+}
+.kpi:last-child{border-right:0}
+.kpi-label{color:var(--muted);font-size:0.7rem;margin-bottom:6px}
+.kpi-value{
+  font-size:1.4rem;
+  font-weight:700;
+  color:#234c77;
+}
+.kpi-sub{margin-top:4px;color:#8390a0;font-size:0.65rem}
+
+/* ==========================================================================
+   BLOCO FÍSICO + METADADOS - 6/6
+   ========================================================================== */
+.meta-strip{
+  grid-column:span 6;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:0;
+}
+.meta-box{
+  padding:9px 12px;
+  border-right:1px solid var(--line2);
+}
+.meta-box:nth-child(1),
+.meta-box:nth-child(2){grid-column:span 3}
+.meta-box:nth-child(3){grid-column:span 6;border-right:0}
+.meta-box .value{font-weight:700;color:var(--ink-strong);font-size:0.95rem}
+.meta-box .label{font-size:0.65rem;color:var(--muted);margin-top:3px}
+
+/* ==========================================================================
+   TABELAS - 12/12
+   ========================================================================== */
+.table-panel{
+  grid-column:span 12;
+}
+.panel-head{
+  padding:.65rem 1.25rem;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--soft);
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tabs{display:flex;gap:3px}
+.tab{
+  border:1px solid transparent;
+  background:transparent;
+  padding:6px 12px;
+  cursor:pointer;
+  font-weight:600;
+  color:#65727c;
+  font-size:0.78rem;
+  border-radius:4px;
+}
+.tab:hover{color:var(--ink-strong)}
+.tab.active{
+  background:#fff;
+  color:var(--blue);
+  border:1px solid var(--line);
+  border-bottom-color:#fff;
+  margin-bottom:-1px;
+}
+
+.panel-tools{display:flex;gap:7px;align-items:center}
+.grid-wrap{overflow:auto;max-height:405px}
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:1600px;
+  font-size:0.775rem;
+}
+th,td{
+  border-right:1px solid var(--line2);
+  border-bottom:1px solid var(--line2);
+  padding:0.5rem 0.8rem;
+  white-space:nowrap;
+  text-align:left;
+  color:var(--ink);
+}
+th{
+  position:sticky;
+  top:0;
+  background:var(--soft);
+  color:#495057;
+  font-weight:700;
+  font-size:0.65rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  border-bottom:2px solid var(--line);
+  z-index:1;
+}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.hidden-col{display:none}
+.empty{
+  text-align:center!important;
+  color:#8090a0;
+  padding:30px!important;
+}
+tbody tr:hover{background:var(--soft-row)}
+
+.table-footer{
+  padding:9px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--soft);
+  gap:12px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--line);
+}
+.searchbox{
+  width:235px;
+  border:1px solid #ced4da;
+  border-radius:4px;
+  padding:0 10px;
+  height:30px;
+  font-size:0.75rem;
+  outline:none;
+}
+.searchbox:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(13,110,253,.15)}
+
+.pages{display:flex;align-items:center;gap:5px}
+.page{
+  border:1px solid #ced4da;
+  background:#fff;
+  border-radius:3px;
+  padding:4px 9px;
+  cursor:pointer;
+  font-size:0.7rem;
+  color:#495057;
+}
+.page:hover{background:#f8f9fa;border-color:#adb5bd}
+.page.active{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
+.badge{
+  display:inline-block;
+  padding:.15rem .5rem;
+  font-size:0.6rem;
+  font-weight:700;
+  border-radius:99px;
+  border:1px solid #d0d0d0;
+  background:#f0f0f0;
+  color:#555;
+  vertical-align:1px;
+}
+.badge.new{
+  background:var(--blue-soft);
+  border-color:#b6d3f2;
+  color:var(--blue);
+}
+
+/* ==========================================================================
+   BOTÕES INFERIORES - 12/12 ALINHADOS À DIREITA
+   ========================================================================== */
+.bottom-actions{
+  grid-column:span 12;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+/* ==========================================================================
+   DRAWER
+   ========================================================================== */
+.drawer{
+  position:fixed;
+  top:0;
+  right:-460px;
+  width:460px;
+  height:100vh;
+  background:#fff;
+  border-left:1px solid var(--line);
+  box-shadow:-10px 0 30px rgba(29,45,65,.14);
+  z-index:20;
+  transition:.25s;
+  display:flex;
+  flex-direction:column;
+}
+.drawer.open{right:0}
+.drawer-head{
+  padding:17px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--soft);
+}
+.drawer-body{padding:15px;overflow:auto;flex:1}
+.drawer-foot{
+  padding:12px 15px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  background:var(--soft);
+}
+.drawer h2{margin:0;font-size:1rem;color:var(--ink-strong)}
+
+.x{
+  border:0;
+  background:none;
+  font-size:1.2rem;
+  cursor:pointer;
+  color:#617083;
+  padding:4px 8px;
+  border-radius:4px;
+  line-height:1;
+}
+.x:hover{background:#e2e8f0;color:#000}
+
+.block-title{
+  font-size:0.65rem;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:#7a8796;
+  margin:16px 0 8px;
+  font-weight:700;
+}
+
+.report-field{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid var(--line2);
+  padding:7px 8px;
+  margin-bottom:5px;
+  border-radius:4px;
+  background:#fff;
+  font-size:0.75rem;
+}
+.report-field .drag{color:#a1adba;margin-left:auto}
+
+/* ==========================================================================
+   MODAIS
+   ========================================================================== */
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:30;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.modal-bg.open{display:flex}
+.modal{
+  width:440px;
+  max-width:98vw;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  overflow:hidden;
+  border:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  max-height:92vh;
+}
+.modal.wide{width:720px}
+.modal-head{
+  padding:0 12px;
+  height:38px;
+  border-bottom:1px solid var(--line);
+  font-weight:700;
+  color:var(--ink-strong);
+  font-size:0.82rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--soft);
+  flex-shrink:0;
+}
+.modal-body{padding:15px;overflow:auto}
+.modal-foot{
+  padding:11px 15px;
+  background:#fafbfd;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  flex-shrink:0;
+}
+
+.notice{
+  background:#f4f8fc;
+  border-left:3px solid #8aaed1;
+  padding:9px 10px;
+  color:#536174;
+  font-size:0.7rem;
+  margin-bottom:12px;
+  border-radius:0 4px 4px 0;
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+.toast{
+  position:fixed;
+  bottom:1.2rem;
+  left:50%;
+  transform:translateX(-50%) translateY(30px);
+  opacity:0;
+  background:#2d3b43;
+  color:#fff;
+  padding:.5rem .85rem;
+  border-radius:4px;
+  z-index:50;
+  transition:.22s;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  font-size:0.78rem;
+  min-width:260px;
+  max-width:380px;
+  text-align:center;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  background:#267a42;
+}
+
+/* ==========================================================================
+   COLUNAS POP
+   ========================================================================== */
+.pop-wrap{position:relative}
+.columns-pop{
+  position:absolute;
+  right:0;
+  top:38px;
+  width:290px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  padding:10px;
+  z-index:10;
+  display:none;
+  border-radius:4px;
+}
+.columns-pop.open{display:block}
+.check{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:6px 2px;
+  font-size:0.72rem;
+  cursor:pointer;
+}
+
+/* ==========================================================================
+   JOB
+   ========================================================================== */
+.job{
+  border:1px solid var(--line);
+  padding:10px;
+  border-radius:4px;
+  display:grid;
+  grid-template-columns:1.4fr .7fr .7fr;
+  gap:10px;
+  align-items:center;
+}
+.job .status{color:var(--ok);font-weight:700}
+
+/* ==========================================================================
+   PREVIEW DE RELATÓRIO
+   ========================================================================== */
+.report-preview{
+  border:1px solid var(--line);
+  background:#fafbfd;
+  border-radius:4px;
+  padding:9px;
+  overflow:auto;
+}
+.preview-head{font-weight:700;font-size:0.75rem;margin-bottom:6px;color:var(--ink-strong)}
+.preview-table{
+  font-size:0.6rem;
+  color:#697687;
+  border-collapse:collapse;
+  min-width:0;
+  width:100%;
+}
+.preview-table th,
+.preview-table td{
+  padding:4px;
+  border:1px solid #e6ebf0;
+  white-space:normal;
+  font-size:0.6rem;
+}
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+@media(max-width:1100px){
+  .filter-row .field:nth-child(1),
+  .filter-row .field:nth-child(2),
+  .filter-row .field:nth-child(3),
+  .filter-row .field:nth-child(4),
+  .filter-row .field:nth-child(5),
+  .filter-row .field:nth-child(6),
+  .filter-row .field.period-field{grid-column:span 6}
+  .filter-row .filter-actions-inline{grid-column:span 12}
+  .advanced .field{grid-column:span 6}
+  .kpi-section,
+  .meta-strip{grid-column:span 12}
+  .drawer{width:100%;right:-100%}
+  .kpi-break{display:none}
+  .topNav .userNav ul li:nth-child(1),
+  .topNav .userNav ul li:nth-child(2){display:none}
+}
+@media(max-width:768px){
+  .page-grid{width:100%;padding:12px 12px 20px;gap:12px}
+  .filter-row .field:nth-child(1),
+  .filter-row .field:nth-child(2),
+  .filter-row .field:nth-child(3),
+  .filter-row .field:nth-child(4),
+  .filter-row .field:nth-child(5),
+  .filter-row .field:nth-child(6),
+  .filter-row .field.period-field,
+  .advanced .field{grid-column:span 12}
+  .kpi-grid .kpi{grid-column:span 12;border-right:0;border-bottom:1px solid var(--line2)}
+  .kpi-grid .kpi:last-child{border-bottom:0}
+  .kpi-grid.two .kpi{grid-column:span 12}
+  .meta-box:nth-child(1),
+  .meta-box:nth-child(2),
+  .meta-box:nth-child(3){grid-column:span 12;border-right:0;border-bottom:1px solid var(--line2)}
+  .meta-box:nth-child(3){border-bottom:0}
+  .toast{left:.75rem;right:.75rem;transform:translateY(30px);min-width:0;max-width:none}
+  .toast.show{transform:translateY(0)}
+  .topNav .userNav ul li:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOPNAV - IDÊNTICA AO PRIMEIRO ARQUIVO (SENTINELA) ===== -->
+<div class="topNav">
+  <div class="wrapper">
+    <div class="userNav">
+      <ul>
+        <li><span><strong>DocZ GED / SIGAD</strong></span></li>
+        <li><span><strong>Módulo Storage</strong></span></li>
+        <li><a href="#"><span>guilherme.ribeiro@sosdocs.com.br</span></a></li>
+        <li><a href="#"><span>Voltar</span></a></li>
+        <li><a href="#"><span>Logout</span></a></li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<main class="page-grid">
+
+  <!-- ===== BREADCRUMB - 12/12 ===== -->
+  <div class="breadcrumb">DocZ &nbsp;›&nbsp; <b>Storage DocZ File Service</b></div>
+
+  <!-- ===== CABEÇALHO - 12/12 ===== -->
+  <div class="page-head">
+    <div>
+      <h1>Storage <span class="badge new">protótipo V3</span></h1>
+      <div class="subtitle">Dados fictícios para simular filtros, consolidações e geração de relatório.</div>
+    </div>
+    <div class="admin-actions">
+      <button class="btn-sos" onclick="openModal('configModal')">Configurações</button>
+    </div>
+  </div>
+
+  <!-- ===== FILTROS - 12/12 (2 LINHAS HORIZONTAIS) ===== -->
+  <section class="filter-card">
+    <div class="filter-row">
+      <div class="field"><label>Cliente</label><select id="fCliente" onchange="syncProjects()"></select></div>
+      <div class="field"><label>Projeto</label><select id="fProjeto"></select></div>
+      <div class="field"><label>Tipo de objeto</label><select id="fObjeto"><option value="">Todos</option><option>Documentos</option><option>Caixas</option></select></div>
+      <div class="field"><label>Situação do arquivo</label><select id="fStatus"><option value="">Todos</option><option>Ativo</option><option>Versionado</option></select></div>
+      <div class="field"><label>Tipo / extensão</label><select id="fExt"><option value="">Todos</option><option>PDF</option><option>JPG/PNG</option><option>TIFF</option><option>Áudio</option><option>Vídeo</option><option>Outros</option></select></div>
+
+      <div class="field"><label>Considerar data de</label><select id="fDateField"><option value="created">Data de criação</option><option value="updated">Data de atualização</option><option value="versionDate">Data da versão</option></select></div>
+      <div class="field period-field"><label>Período</label><div class="date-range"><input id="fStart" type="date" value="2026-09-01"><input id="fEnd" type="date" value="2026-09-30"></div></div>
+      <div class="filter-actions-inline">
+        <button class="btn-sos" onclick="clearFilters()">Limpar</button>
+        <button class="btn-sos btn-sos-primary" onclick="applyFilters()">Consultar</button>
+      </div>
+    </div>
+
+    <div class="advanced" id="advanced">
+      <div class="field"><label>Critério de versão <span class="badge new">simulação</span></label>
+        <select id="fVersionScope"><option value="">Todas as versões</option><option value="active">Somente versão ativa</option><option value="first">Primeira versão</option><option value="last">Última versão</option></select>
+      </div>
+      <div class="field"><label>Origem</label><select id="fOrigin"><option value="">Todas</option><option>Object View</option><option>Repositório físico</option></select></div>
+      <div class="field"><label>Incluir no cálculo</label><select id="fCalc"><option value="both">Arquivos + imagens</option><option value="files">Somente arquivos</option><option value="images">Somente imagens</option></select></div>
+    </div>
+
+    <div class="filter-actions">
+      <div><a class="adv-link" onclick="toggleAdvanced()">+ Filtros avançados</a>
+        <span class="help">&nbsp;&nbsp;•&nbsp;&nbsp; Limite/período máximo do relatório: <span class="pending">a definir na especificação</span></span>
+      </div>
+    </div>
+
+    <div class="applied">
+      <div><strong>Recorte aplicado:</strong> <span id="filterSummary">carregando...</span></div>
+      <div><strong id="bucketSummary"></strong></div>
+    </div>
+  </section>
+
+  <!-- ===== KPI: ATIVOS - 6/12 ===== -->
+  <section class="kpi-section" id="sectionActive">
+    <div class="kpi-title">
+      <div class="kpi-title-left">Arquivos Ativos <span class="badge">estrutura atual preservada</span></div>
+      <div class="kpi-break" id="activeBreakdown">—</div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="activeFiles">0</div><div class="kpi-sub">Última versão ativa / disponível na Object View</div></div>
+      <div class="kpi"><div class="kpi-label">Volume de Imagens</div><div class="kpi-value" id="activeImages">0</div><div class="kpi-sub">Imagens vinculadas aos arquivos ativos</div></div>
+      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="activeGB">0,00</div><div class="kpi-sub" id="activeCalcHint">Arquivos + imagens</div></div>
+    </div>
+  </section>
+
+  <!-- ===== KPI: VERSIONADOS - 6/12 ===== -->
+  <section class="kpi-section" id="sectionVersioned">
+    <div class="kpi-title">
+      <div class="kpi-title-left">Arquivos Versionados <span class="badge">terminologia atual preservada</span></div>
+      <div class="kpi-break" id="versionedBreakdown">—</div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="versionedFiles">0</div></div>
+      <div class="kpi"><div class="kpi-label">Volume de Imagens</div><div class="kpi-value" id="versionedImages">0</div></div>
+      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="versionedGB">0,00</div><div class="kpi-sub" id="versionedCalcHint">Arquivos + imagens</div></div>
+    </div>
+  </section>
+
+  <!-- ===== FÍSICO - 6/12 ===== -->
+  <section class="kpi-section">
+    <div class="kpi-title"><div class="kpi-title-left">Repositório Físico (HD)</div><div class="kpi-break">Respeita o recorte selecionado</div></div>
+    <div class="kpi-grid two">
+      <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="physicalFiles">0</div></div>
+      <div class="kpi"><div class="kpi-label">Ocupação do Repositório (GB)</div><div class="kpi-value" id="physicalGB">0,00</div></div>
+    </div>
+  </section>
+
+  <!-- ===== METADADOS - 6/12 ===== -->
+  <section class="meta-strip">
+    <div class="meta-box"><div class="value" id="metaCount">0</div><div class="label">Qtd. de metadados preenchidos <span class="badge new">novo</span></div></div>
+    <div class="meta-box"><div class="value" id="metaGB">0,00 GB</div><div class="label">Ocupação estimada dos metadados <span class="badge new">novo</span></div></div>
+    <div class="meta-box"><div class="label"><b>Observação do protótipo:</b> os números de metadados são fictícios para demonstrar comportamento. A regra real de medição no banco ainda precisa ser definida tecnicamente.</div></div>
+  </section>
+
+  <!-- ===== TABELA - 12/12 ===== -->
+  <section class="table-panel">
+    <div class="panel-head">
+      <div class="tabs">
+        <button class="tab active" id="tabProjeto" onclick="switchTab('projeto')">Storage por Projeto</button>
+        <button class="tab" id="tabCliente" onclick="switchTab('cliente')">Storage por Cliente</button>
+      </div>
+      <div class="panel-tools">
+        <span id="resultCount" class="help">0 registros</span>
+        <div class="pop-wrap">
+          <button class="btn-sos btn-sos-sm" onclick="toggleColumns()">Colunas</button>
+          <div class="columns-pop" id="columnsPop">
+            <b>Colunas adicionais</b>
+            <label class="check"><input type="checkbox" data-col="tipo" onchange="toggleColumn(this)"> Tipo de objeto</label>
+            <label class="check"><input type="checkbox" data-col="extensao" onchange="toggleColumn(this)"> Tipo / extensão</label>
+            <label class="check"><input type="checkbox" data-col="metaqtd" onchange="toggleColumn(this)"> Qtd. Metadados <span class="badge new">novo</span></label>
+            <label class="check"><input type="checkbox" data-col="metagb" onchange="toggleColumn(this)"> Ocupação Metadados (GB) <span class="badge new">novo</span></label>
+            <div class="help" style="margin-top:7px">As colunas atuais permanecem exibidas por padrão.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-wrap">
+      <table id="storageTable">
+        <thead><tr>
+          <th>Alias</th><th>Nome Cliente</th><th>CNPJ</th><th>ID Projeto</th><th>Nome Projeto</th>
+          <th>Qtd Arquivos</th><th>Qtd Imagens</th><th class="status-col-versioned">Arquivos Versionados</th><th class="status-col-active">Arquivos Ativos</th>
+          <th>Tamanho (GB)</th><th>Valor (R$)</th><th>Arquivos Excluídos</th><th>Qtd Arquivos no Storage</th><th>Ocupação Repositório Físico</th>
+          <th class="hidden-col col-tipo">Tipo de objeto</th><th class="hidden-col col-extensao">Tipo / extensão</th>
+          <th class="hidden-col col-metaqtd">Qtd. Metadados</th><th class="hidden-col col-metagb">Ocupação Metadados (GB)</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="searchbox" id="tableSearch" placeholder="Buscar na grade..." oninput="tableSearchChanged()">
+        <select id="pageSize" class="btn-sos btn-sos-sm" onchange="pageSizeChanged()"><option>5</option><option selected>10</option><option>20</option></select>
+      </div>
+      <div class="pages">
+        <button class="page" onclick="goPage('first')">Primeiro</button><button class="page" onclick="goPage('prev')">Anterior</button>
+        <span class="page active" id="pageIndicator">1</span><span id="pageTotal">de 1</span>
+        <button class="page" onclick="goPage('next')">Seguinte</button><button class="page" onclick="goPage('last')">Último</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOTÕES INFERIORES - 12/12 ===== -->
+  <div class="bottom-actions">
+    <button class="btn-sos btn-sos-outline-secondary" onclick="openDrawer()">Configurar Relatório</button>
+    <button class="btn-sos" onclick="openModal('gbModal')">Atualizar Valor do GB</button>
+    <button class="btn-sos" onclick="openModal('configModal')">Configurações</button>
+    <button class="btn-sos btn-sos-primary" onclick="generateReport()">Exportar Relatório</button>
+  </div>
+
+</main>
+
+<!-- ===== DRAWER ===== -->
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div><h2>Configurar Relatório</h2><div class="help">Infraestrutura do Espelho Personalizado aplicada ao Storage.</div></div>
+    <button class="x" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body">
+    <div class="field"><label>Nome do modelo</label><input id="modelName" value="Relatório de Storage - Operação"></div>
+    <div class="field" style="margin-top:9px"><label>Layout</label><select id="reportLayout" onchange="updatePreview()"><option>Modelo 1 — Analítico</option><option>Modelo 2 — Resumido</option><option>Modelo 3 — Faturamento</option><option>Modelo 4 — Executivo</option></select></div>
+    <div class="block-title">Campos do relatório</div>
+    <div id="reportFields">
+      <label class="report-field"><input data-key="cliente" data-label="Cliente" type="checkbox" checked onchange="updatePreview()"> Cliente <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="projeto" data-label="Projeto" type="checkbox" checked onchange="updatePreview()"> Projeto <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="qtd" data-label="Qtd. Arquivos" type="checkbox" checked onchange="updatePreview()"> Qtd. Arquivos <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="img" data-label="Qtd. Imagens" type="checkbox" checked onchange="updatePreview()"> Qtd. Imagens <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="vers" data-label="Arquivos Versionados" type="checkbox" checked onchange="updatePreview()"> Arquivos Versionados <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="ativos" data-label="Arquivos Ativos" type="checkbox" checked onchange="updatePreview()"> Arquivos Ativos <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="tam" data-label="Tamanho (GB)" type="checkbox" checked onchange="updatePreview()"> Tamanho (GB) <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="valor" data-label="Valor (R$)" type="checkbox" checked onchange="updatePreview()"> Valor (R$) <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="ext" data-label="Tipo / extensão" type="checkbox" onchange="updatePreview()"> Tipo / extensão <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="meta" data-label="Qtd. Metadados" type="checkbox" onchange="updatePreview()"> Qtd. Metadados <span class="badge new">novo</span><span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="metagb" data-label="Ocupação Metadados (GB)" type="checkbox" onchange="updatePreview()"> Ocupação Metadados (GB) <span class="badge new">novo</span><span class="drag">⋮⋮</span></label>
+    </div>
+    <div class="block-title">Apresentação</div>
+    <label class="check"><input type="checkbox" checked> Exibir nome dos campos</label>
+    <label class="check"><input type="checkbox" checked> Incluir logo</label>
+    <label class="check"><input type="checkbox" checked> Exibir filtros aplicados no relatório</label>
+    <label class="check"><input type="checkbox" checked> Exibir regra/critério utilizado no cálculo</label>
+    <div class="block-title">Pré-visualização</div>
+    <div class="report-preview" id="reportPreview"></div>
+  </div>
+  <div class="drawer-foot"><button class="btn-sos" onclick="closeDrawer()">Cancelar</button><button class="btn-sos btn-sos-outline-secondary" onclick="saveModel()">Salvar modelo</button><button class="btn-sos btn-sos-primary" onclick="generateReport()">Gerar relatório</button></div>
+</aside>
+
+<!-- ===== MODAIS ===== -->
+<div class="modal-bg" id="gbModal">
+  <div class="modal">
+    <div class="modal-head"><span>Atualizar Valor do GB</span><button class="x" onclick="closeModal('gbModal')">×</button></div>
+    <div class="modal-body">
+      <div class="notice">Ação administrativa preservada da tela atual. O valor informado recalcula a coluna <b>Valor (R$)</b> no protótipo.</div>
+      <div class="field"><label>Valor do GB (R$)</label><input id="gbValue" type="number" step="0.01" value="7.00"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-sos" onclick="closeModal('gbModal')">Cancelar</button><button class="btn-sos btn-sos-primary" onclick="updateGb()">Atualizar valor</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="configModal">
+  <div class="modal wide">
+    <div class="modal-head"><span>Configurações de Storage</span><button class="x" onclick="closeModal('configModal')">×</button></div>
+    <div class="modal-body">
+      <div class="notice">Área administrativa preservada como referência. Esta V3 concentra a evolução em consulta, filtros e relatório.</div>
+      <div class="field"><label>Perfil de acesso</label><input value="Administrador — acesso a configurações e atualização do valor do GB" disabled></div>
+    </div>
+    <div class="modal-foot"><button class="btn-sos btn-sos-primary" onclick="closeModal('configModal')">Fechar</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="downloadModal">
+  <div class="modal wide">
+    <div class="modal-head"><span>Central de Download — simulação</span><button class="x" onclick="closeModal('downloadModal')">×</button></div>
+    <div class="modal-body">
+      <div class="notice">O relatório abaixo foi gerado a partir dos filtros e campos selecionados neste protótipo.</div>
+      <div class="job">
+        <div><b id="jobName">Relatório de Storage</b><div class="help" id="jobFilters"></div></div>
+        <div><span class="status">Disponível</span><div class="help">XLSX editável</div></div>
+        <div style="text-align:right"><button class="btn-sos btn-sos-sm btn-sos-primary" onclick="fakeDownload()">Baixar arquivo</button></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-sos" onclick="closeModal('downloadModal')">Fechar</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const records = [
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Ativo",ext:"PDF",origin:"Object View",versionRole:"last",created:"2026-09-03",updated:"2026-09-27",versionDate:"2026-09-27",qtd:1243,img:305943,gbFiles:102.73,gbImages:55.40,exc:3,meta:124300,metaGB:.42},
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Ativo",ext:"Vídeo",origin:"Object View",versionRole:"last",created:"2026-09-10",updated:"2026-09-22",versionDate:"2026-09-22",qtd:84,img:84,gbFiles:41.21,gbImages:.04,exc:0,meta:4200,metaGB:.03},
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"first",created:"2026-08-18",updated:"2026-09-08",versionDate:"2026-09-08",qtd:1832,img:401120,gbFiles:151.33,gbImages:77.22,exc:35,meta:181900,metaGB:.61},
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"middle",created:"2026-08-18",updated:"2026-09-20",versionDate:"2026-09-20",qtd:721,img:151050,gbFiles:61.10,gbImages:26.11,exc:15,meta:70500,metaGB:.24},
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Caixas",status:"Ativo",ext:"JPG/PNG",origin:"Object View",versionRole:"last",created:"2026-09-05",updated:"2026-09-26",versionDate:"2026-09-26",qtd:26046,img:26046,gbFiles:15.16,gbImages:15.16,exc:0,meta:52092,metaGB:.18},
+  {alias:"abadiania-go",cliente:"Prefeitura Municipal de Abadiânia",cnpj:"01.298.330/0001-78",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Caixas",status:"Versionado",ext:"JPG/PNG",origin:"Object View",versionRole:"first",created:"2026-07-03",updated:"2026-09-12",versionDate:"2026-09-12",qtd:1170,img:1170,gbFiles:.92,gbImages:.92,exc:0,meta:2340,metaGB:.01},
+
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Ativo",ext:"PDF",origin:"Object View",versionRole:"last",created:"2026-09-01",updated:"2026-09-25",versionDate:"2026-09-25",qtd:84210,img:260118,gbFiles:312.40,gbImages:121.75,exc:90,meta:642100,metaGB:2.40},
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Ativo",ext:"Áudio",origin:"Object View",versionRole:"last",created:"2026-09-12",updated:"2026-09-28",versionDate:"2026-09-28",qtd:3180,img:0,gbFiles:221.10,gbImages:0,exc:4,meta:18500,metaGB:.09},
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"first",created:"2026-08-15",updated:"2026-09-11",versionDate:"2026-09-11",qtd:44120,img:129331,gbFiles:159.22,gbImages:59.20,exc:320,meta:310000,metaGB:1.10},
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"middle",created:"2026-08-15",updated:"2026-10-02",versionDate:"2026-10-02",qtd:12650,img:38220,gbFiles:48.31,gbImages:15.60,exc:85,meta:91000,metaGB:.34},
+
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Ativo",ext:"PDF",origin:"Object View",versionRole:"last",created:"2026-09-02",updated:"2026-09-29",versionDate:"2026-09-29",qtd:128900,img:542003,gbFiles:510.72,gbImages:230.20,exc:101,meta:880000,metaGB:3.18},
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Ativo",ext:"Vídeo",origin:"Object View",versionRole:"last",created:"2026-09-18",updated:"2026-09-30",versionDate:"2026-09-30",qtd:1920,img:0,gbFiles:387.90,gbImages:0,exc:0,meta:14200,metaGB:.08},
+  {alias:"--------",cliente:"PNUD-PY",cnpj:"—",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"first",created:"2026-07-20",updated:"2026-09-14",versionDate:"2026-09-14",qtd:66310,img:225000,gbFiles:282.40,gbImages:105.72,exc:450,meta:442000,metaGB:1.67},
+
+  {alias:"ABR-TELECOM",cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",cnpj:"05.243.212/0001-13",id:"204",projeto:"ABR TELECOM",objeto:"Caixas",status:"Ativo",ext:"JPG/PNG",origin:"Object View",versionRole:"last",created:"2026-09-04",updated:"2026-09-24",versionDate:"2026-09-24",qtd:18200,img:18200,gbFiles:12.30,gbImages:12.30,exc:2,meta:36400,metaGB:.14},
+  {alias:"ABR-TELECOM",cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",cnpj:"05.243.212/0001-13",id:"204",projeto:"ABR TELECOM",objeto:"Documentos",status:"Ativo",ext:"PDF",origin:"Object View",versionRole:"last",created:"2026-09-06",updated:"2026-09-28",versionDate:"2026-09-28",qtd:52000,img:181200,gbFiles:199.00,gbImages:71.30,exc:20,meta:405000,metaGB:1.43},
+  {alias:"ABR-TELECOM",cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",cnpj:"05.243.212/0001-13",id:"204",projeto:"ABR TELECOM",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"first",created:"2026-08-02",updated:"2026-09-13",versionDate:"2026-09-13",qtd:14000,img:43000,gbFiles:52.10,gbImages:18.60,exc:74,meta:101000,metaGB:.39},
+
+  {alias:"ACCOR",cliente:"ACCOR HOTELARIA S.A.",cnpj:"09.967.852/0052-77",id:"275",projeto:"ACCOR HOTELARIA S.A.",objeto:"Documentos",status:"Ativo",ext:"PDF",origin:"Object View",versionRole:"last",created:"2026-09-08",updated:"2026-09-26",versionDate:"2026-09-26",qtd:16000,img:16000,gbFiles:39.20,gbImages:9.10,exc:0,meta:96000,metaGB:.32},
+  {alias:"ACCOR",cliente:"ACCOR HOTELARIA S.A.",cnpj:"09.967.852/0052-77",id:"275",projeto:"ACCOR HOTELARIA S.A.",objeto:"Documentos",status:"Versionado",ext:"PDF",origin:"Object View",versionRole:"first",created:"2026-08-10",updated:"2026-09-19",versionDate:"2026-09-19",qtd:8200,img:8200,gbFiles:18.31,gbImages:4.60,exc:8,meta:47000,metaGB:.17},
+
+  {alias:"ACNUR",cliente:"ACNUR - Alto-comissariado das Nações Unidas para os Refugiados",cnpj:"07.100.754/0016-2",id:"228",projeto:"ACNUR",objeto:"Documentos",status:"Ativo",ext:"Áudio",origin:"Object View",versionRole:"last",created:"2026-09-11",updated:"2026-09-23",versionDate:"2026-09-23",qtd:4200,img:0,gbFiles:295.80,gbImages:0,exc:1,meta:29000,metaGB:.13},
+  {alias:"ACNUR",cliente:"ACNUR - Alto-comissariado das Nações Unidas para os Refugiados",cnpj:"07.100.754/0016-2",id:"228",projeto:"ACNUR",objeto:"Documentos",status:"Ativo",ext:"Vídeo",origin:"Object View",versionRole:"last",created:"2026-09-13",updated:"2026-10-03",versionDate:"2026-10-03",qtd:1700,img:0,gbFiles:620.40,gbImages:0,exc:0,meta:11900,metaGB:.07},
+  {alias:"ACNUR",cliente:"ACNUR - Alto-comissariado das Nações Unidas para os Refugiados",cnpj:"07.100.754/0016-2",id:"228",projeto:"ACNUR",objeto:"Documentos",status:"Versionado",ext:"Áudio",origin:"Object View",versionRole:"first",created:"2026-07-16",updated:"2026-09-09",versionDate:"2026-09-09",qtd:1100,img:0,gbFiles:77.40,gbImages:0,exc:5,meta:7200,metaGB:.03},
+
+  {alias:"34-OFICIO-RJ",cliente:"34º OFICIO DE NOTAS",cnpj:"—",id:"169",projeto:"34 OFICIO/RJ",objeto:"Documentos",status:"Ativo",ext:"TIFF",origin:"Object View",versionRole:"last",created:"2026-09-01",updated:"2026-09-17",versionDate:"2026-09-17",qtd:22300,img:145800,gbFiles:88.20,gbImages:66.30,exc:12,meta:165000,metaGB:.58},
+  {alias:"34-OFICIO-RJ",cliente:"34º OFICIO DE NOTAS",cnpj:"—",id:"169",projeto:"34 OFICIO/RJ",objeto:"Documentos",status:"Versionado",ext:"TIFF",origin:"Object View",versionRole:"first",created:"2026-08-01",updated:"2026-09-21",versionDate:"2026-09-21",qtd:6100,img:39200,gbFiles:26.90,gbImages:17.10,exc:23,meta:41000,metaGB:.15},
+
+  {alias:"ABDI",cliente:"ABDI",cnpj:"—",id:"105",projeto:"ABDI",objeto:"Documentos",status:"Ativo",ext:"Outros",origin:"Object View",versionRole:"last",created:"2026-09-15",updated:"2026-09-20",versionDate:"2026-09-20",qtd:9300,img:1200,gbFiles:44.10,gbImages:1.90,exc:0,meta:61000,metaGB:.21}
+];
+
+const physicalRecords = [
+  {cliente:"Prefeitura Municipal de Abadiânia",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Ativo",ext:"PDF",created:"2026-09-03",updated:"2026-09-27",versionDate:"2026-09-27",qty:1243,gb:158.13},
+  {cliente:"Prefeitura Municipal de Abadiânia",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Documentos",status:"Versionado",ext:"PDF",created:"2026-08-18",updated:"2026-09-20",versionDate:"2026-09-20",qty:2553,gb:315.76},
+  {cliente:"Prefeitura Municipal de Abadiânia",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Caixas",status:"Ativo",ext:"JPG/PNG",created:"2026-09-05",updated:"2026-09-26",versionDate:"2026-09-26",qty:26046,gb:15.16},
+  {cliente:"Prefeitura Municipal de Abadiânia",id:"300",projeto:"Prefeitura de Abadiânia - GO",objeto:"Caixas",status:"Versionado",ext:"JPG/PNG",created:"2026-07-03",updated:"2026-09-12",versionDate:"2026-09-12",qty:1170,gb:.92},
+  {cliente:"PNUD-PY",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Ativo",ext:"PDF",created:"2026-09-01",updated:"2026-09-25",versionDate:"2026-09-25",qty:84210,gb:434.15},
+  {cliente:"PNUD-PY",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Ativo",ext:"Áudio",created:"2026-09-12",updated:"2026-09-28",versionDate:"2026-09-28",qty:3180,gb:221.10},
+  {cliente:"PNUD-PY",id:"103",projeto:"PNUD",objeto:"Documentos",status:"Versionado",ext:"PDF",created:"2026-08-15",updated:"2026-09-11",versionDate:"2026-09-11",qty:44120,gb:218.42},
+  {cliente:"PNUD-PY",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Ativo",ext:"PDF",created:"2026-09-02",updated:"2026-09-29",versionDate:"2026-09-29",qty:128900,gb:740.92},
+  {cliente:"PNUD-PY",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Ativo",ext:"Vídeo",created:"2026-09-18",updated:"2026-09-30",versionDate:"2026-09-30",qty:1920,gb:387.90},
+  {cliente:"PNUD-PY",id:"216",projeto:"PNUD - EXPEDIENTES",objeto:"Documentos",status:"Versionado",ext:"PDF",created:"2026-07-20",updated:"2026-09-14",versionDate:"2026-09-14",qty:66310,gb:388.12},
+  {cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",id:"204",projeto:"ABR TELECOM",objeto:"Caixas",status:"Ativo",ext:"JPG/PNG",created:"2026-09-04",updated:"2026-09-24",versionDate:"2026-09-24",qty:18200,gb:12.30},
+  {cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",id:"204",projeto:"ABR TELECOM",objeto:"Documentos",status:"Ativo",ext:"PDF",created:"2026-09-06",updated:"2026-09-28",versionDate:"2026-09-28",qty:52000,gb:270.30},
+  {cliente:"ASSOCIACAO BRASILEIRA DE RECURSOS EM TELECOMUNICACOES",id:"204",projeto:"ABR TELECOM",objeto:"Documentos",status:"Versionado",ext:"PDF",created:"2026-08-02",updated:"2026-09-13",versionDate:"2026-09-13",qty:14000,gb:70.70},
+  {cliente:"ACCOR HOTELARIA S.A.",id:"275",projeto:"ACCOR HOTELARIA S.A.",objeto:"Documentos",status:"Ativo",ext:"PDF",created:"2026-09-08",updated:"2026-09-26",versionDate:"2026-09-26",qty:16000,gb:48.30},
+  {cliente:"ACCOR HOTELARIA S.A.",id:"275",projeto:"ACCOR HOTELARIA S.A.",objeto:"Documentos",status:"Versionado",ext:"PDF",created:"2026-08-10",updated:"2026-09-19",versionDate:"2026-09-19",qty:8200,gb:22.91},
+  {cliente:"ACNUR - Alto-comissariado das Nações Unidas para os Refugiados",id:"228",projeto:"ACNUR",objeto:"Documentos",status:"Ativo",ext:"Áudio",created:"2026-09-11",updated:"2026-09-23",versionDate:"2026-09-23",qty:4200,gb:295.80},
+  {cliente:"ACNUR - Alto-comissariado das Nações Unidas para os Refugiados",id:"228",projeto:"ACNUR",objeto:"Documentos",status:"Versionado",ext:"Áudio",created:"2026-07-16",updated:"2026-09-09",versionDate:"2026-09-09",qty:1100,gb:77.40},
+  {cliente:"34º OFICIO DE NOTAS",id:"169",projeto:"34 OFICIO/RJ",objeto:"Documentos",status:"Ativo",ext:"TIFF",created:"2026-09-01",updated:"2026-09-17",versionDate:"2026-09-17",qty:22300,gb:154.50},
+  {cliente:"34º OFICIO DE NOTAS",id:"169",projeto:"34 OFICIO/RJ",objeto:"Documentos",status:"Versionado",ext:"TIFF",created:"2026-08-01",updated:"2026-09-21",versionDate:"2026-09-21",qty:6100,gb:44.00},
+  {cliente:"ABDI",id:"105",projeto:"ABDI",objeto:"Documentos",status:"Ativo",ext:"Outros",created:"2026-09-15",updated:"2026-09-20",versionDate:"2026-09-20",qty:9300,gb:46.00}
+];
+
+let activeFilters = {};
+let filteredRecords = [];
+let filteredPhysical = [];
+let currentTab = "projeto";
+let gbRate = 7;
+let currentPage = 1;
+let currentAggregated = [];
+
+function fmt(n,d=0){return Number(n||0).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+function uniq(arr){return [...new Set(arr.filter(Boolean))]}
+function sum(arr,key){return arr.reduce((a,b)=>a+(+b[key]||0),0)}
+function totalGB(r,mode){
+  if(mode==="files") return r.gbFiles||0;
+  if(mode==="images") return r.gbImages||0;
+  return (r.gbFiles||0)+(r.gbImages||0);
+}
+function option(el,value,label){const o=document.createElement("option");o.value=value;o.textContent=label;el.appendChild(o)}
+function initFilters(){
+  const c=document.getElementById("fCliente");
+  c.innerHTML="";option(c,"","Todos os clientes");
+  uniq(records.map(r=>r.cliente)).sort().forEach(v=>option(c,v,v));
+  syncProjects();
+}
+function syncProjects(){
+  const client=document.getElementById("fCliente").value;
+  const p=document.getElementById("fProjeto");
+  const old=p.value;p.innerHTML="";option(p,"","Todos os projetos");
+  uniq(records.filter(r=>!client||r.cliente===client).map(r=>r.projeto)).sort().forEach(v=>option(p,v,v));
+  if([...p.options].some(o=>o.value===old))p.value=old;
+}
+function readFilters(){
+  return {
+    cliente:document.getElementById("fCliente").value,
+    projeto:document.getElementById("fProjeto").value,
+    objeto:document.getElementById("fObjeto").value,
+    status:document.getElementById("fStatus").value,
+    ext:document.getElementById("fExt").value,
+    dateField:document.getElementById("fDateField").value,
+    start:document.getElementById("fStart").value,
+    end:document.getElementById("fEnd").value,
+    versionScope:document.getElementById("fVersionScope").value,
+    origin:document.getElementById("fOrigin").value,
+    calc:document.getElementById("fCalc").value
+  };
+}
+function dateInRange(v,start,end){if(!v)return false;if(start&&v<start)return false;if(end&&v>end)return false;return true}
+function recordMatches(r,f,isPhysical=false){
+  if(f.cliente&&r.cliente!==f.cliente)return false;
+  if(f.projeto&&r.projeto!==f.projeto)return false;
+  if(f.objeto&&r.objeto!==f.objeto)return false;
+  if(f.status&&r.status!==f.status)return false;
+  if(f.ext&&r.ext!==f.ext)return false;
+  if(!dateInRange(r[f.dateField],f.start,f.end))return false;
+  if(!isPhysical){
+    if(f.origin==="Repositório físico")return false;
+    if(f.origin&&r.origin!==f.origin)return false;
+    if(f.versionScope==="active"&&r.status!=="Ativo")return false;
+    if(f.versionScope==="first"&&r.versionRole!=="first")return false;
+    if(f.versionScope==="last"&&r.versionRole!=="last")return false;
+  }else{
+    if(f.origin==="Object View")return false;
+    if(f.versionScope==="active"&&r.status!=="Ativo")return false;
+    if(f.versionScope==="first"&&r.status!=="Versionado")return false;
+    if(f.versionScope==="last"&&r.status!=="Ativo")return false;
+  }
+  return true;
+}
+function applyFilters(showToast=true){
+  activeFilters=readFilters();
+  filteredRecords=records.filter(r=>recordMatches(r,activeFilters,false));
+  filteredPhysical=physicalRecords.filter(r=>recordMatches(r,activeFilters,true));
+  currentPage=1;
+  renderAll();
+  if(showToast)toast("Filtros aplicados: indicadores, grade e preview foram recalculados.");
+}
+function clearFilters(){
+  document.getElementById("fCliente").value="";syncProjects();
+  ["fProjeto","fObjeto","fStatus","fExt","fVersionScope","fOrigin"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("fDateField").value="created";
+  document.getElementById("fStart").value="2026-09-01";document.getElementById("fEnd").value="2026-09-30";
+  document.getElementById("fCalc").value="both";
+  applyFilters(false);toast("Filtros restaurados para o recorte padrão do protótipo.");
+}
+function calcOccupation(arr){
+  return arr.reduce((a,r)=>a+totalGB(r,activeFilters.calc),0)
+}
+function breakdown(arr){
+  if(!arr.length)return "Sem dados no recorte";
+  const m={};
+  arr.forEach(r=>{if(!m[r.ext])m[r.ext]={q:0,gb:0};m[r.ext].q+=r.qtd;m[r.ext].gb+=totalGB(r,activeFilters.calc)});
+  return Object.entries(m).sort((a,b)=>b[1].gb-a[1].gb).slice(0,4).map(([k,v])=>`${k}: ${fmt(v.q)} arq. / ${fmt(v.gb,2)} GB`).join("  •  ");
+}
+function renderKPIs(){
+  const active=filteredRecords.filter(r=>r.status==="Ativo");
+  const ver=filteredRecords.filter(r=>r.status==="Versionado");
+
+  const onlyActive = activeFilters.status==="Ativo";
+  const onlyVersioned = activeFilters.status==="Versionado";
+  document.getElementById("sectionActive").style.display = onlyVersioned ? "none" : "";
+  document.getElementById("sectionVersioned").style.display = onlyActive ? "none" : "";
+  document.querySelectorAll(".status-col-active").forEach(el=>{el.style.display = onlyVersioned ? "none" : "";});
+  document.querySelectorAll(".status-col-versioned").forEach(el=>{el.style.display = onlyActive ? "none" : "";});
+  document.getElementById("activeFiles").textContent=fmt(sum(active,"qtd"));
+  document.getElementById("activeImages").textContent=fmt(sum(active,"img"));
+  document.getElementById("activeGB").textContent=fmt(calcOccupation(active),2);
+  document.getElementById("versionedFiles").textContent=fmt(sum(ver,"qtd"));
+  document.getElementById("versionedImages").textContent=fmt(sum(ver,"img"));
+  document.getElementById("versionedGB").textContent=fmt(calcOccupation(ver),2);
+  document.getElementById("physicalFiles").textContent=fmt(sum(filteredPhysical,"qty"));
+  document.getElementById("physicalGB").textContent=fmt(sum(filteredPhysical,"gb"),2);
+  document.getElementById("activeBreakdown").textContent=breakdown(active);
+  document.getElementById("versionedBreakdown").textContent=breakdown(ver);
+  const hint=activeFilters.calc==="files"?"Somente arquivos":activeFilters.calc==="images"?"Somente imagens":"Arquivos + imagens";
+  document.getElementById("activeCalcHint").textContent=hint;
+  document.getElementById("versionedCalcHint").textContent=hint;
+  document.getElementById("metaCount").textContent=fmt(sum(filteredRecords,"meta"));
+  document.getElementById("metaGB").textContent=fmt(sum(filteredRecords,"metaGB"),2)+" GB";
+}
+function aggregate(group){
+  const map={};
+  filteredRecords.forEach(r=>{
+    const key=group==="cliente"?r.cliente:r.id;
+    if(!map[key])map[key]={
+      alias:group==="cliente"?"—":r.alias,cliente:r.cliente,cnpj:r.cnpj,id:group==="cliente"?"—":r.id,
+      projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0,
+      tipos:new Set(),exts:new Set(),meta:0,metaGB:0
+    };
+    const a=map[key];
+    a.qtd+=r.qtd;a.img+=r.img;a.tam+=totalGB(r,activeFilters.calc);a.exc+=r.exc;a.meta+=r.meta;a.metaGB+=r.metaGB;
+    if(r.status==="Ativo")a.ativos+=r.qtd;else if(r.status==="Versionado")a.vers+=r.qtd;
+    a.tipos.add(r.objeto);a.exts.add(r.ext);
+  });
+  filteredPhysical.forEach(r=>{
+    const key=group==="cliente"?r.cliente:r.id;
+    if(!map[key]){
+      const base=records.find(x=>x.id===r.id)||{};
+      map[key]={alias:group==="cliente"?"—":base.alias||"—",cliente:r.cliente,cnpj:base.cnpj||"—",id:group==="cliente"?"—":r.id,projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0,tipos:new Set(),exts:new Set(),meta:0,metaGB:0};
+    }
+    map[key].storage+=r.qty;map[key].repo+=r.gb;
+  });
+  return Object.values(map).map(a=>({...a,valor:a.tam*gbRate,tipo:[...a.tipos].join(", ")||"—",ext:[...a.exts].join(", ")||"—"}));
+}
+function renderTable(){
+  currentAggregated=aggregate(currentTab);
+  const q=document.getElementById("tableSearch").value.trim().toLowerCase();
+  let data=currentAggregated.filter(r=>!q||Object.values(r).filter(v=>typeof v!=="object").join(" ").toLowerCase().includes(q));
+  const ps=+document.getElementById("pageSize").value||10;
+  const totalPages=Math.max(1,Math.ceil(data.length/ps));if(currentPage>totalPages)currentPage=totalPages;
+  const start=(currentPage-1)*ps;const page=data.slice(start,start+ps);
+  const body=document.getElementById("tbody");body.innerHTML="";
+  if(!page.length){
+    const tr=document.createElement("tr");tr.innerHTML='<td colspan="18" class="empty">Nenhum dado encontrado para o recorte aplicado.</td>';body.appendChild(tr);
+  }else{
+    page.forEach(r=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${r.alias}</td><td>${r.cliente}</td><td>${r.cnpj}</td><td>${r.id}</td><td>${r.projeto}</td>
+      <td class="num">${fmt(r.qtd)}</td><td class="num">${fmt(r.img)}</td><td class="num status-col-versioned">${fmt(r.vers)}</td><td class="num status-col-active">${fmt(r.ativos)}</td>
+      <td class="num">${fmt(r.tam,2)}</td><td class="num">${fmt(r.valor,2)}</td><td class="num">${fmt(r.exc)}</td><td class="num">${fmt(r.storage)}</td><td class="num">${fmt(r.repo,2)}</td>
+      <td class="hidden-col col-tipo">${r.tipo}</td><td class="hidden-col col-extensao">${r.ext}</td><td class="hidden-col col-metaqtd num">${fmt(r.meta)}</td><td class="hidden-col col-metagb num">${fmt(r.metaGB,2)}</td>`;
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById("resultCount").textContent=`${data.length} registro(s) consolidados`;
+  document.getElementById("pageIndicator").textContent=currentPage;document.getElementById("pageTotal").textContent=`de ${totalPages}`;
+  document.querySelectorAll("#columnsPop input[data-col]").forEach(cb=>document.querySelectorAll(".col-"+cb.dataset.col).forEach(el=>el.classList.toggle("hidden-col",!cb.checked)));
+
+  const onlyActive = activeFilters.status==="Ativo";
+  const onlyVersioned = activeFilters.status==="Versionado";
+  document.querySelectorAll(".status-col-active").forEach(el=>{el.style.display = onlyVersioned ? "none" : "";});
+  document.querySelectorAll(".status-col-versioned").forEach(el=>{el.style.display = onlyActive ? "none" : "";});
+}
+function labelDateField(v){return v==="created"?"criação":v==="updated"?"atualização":"versão"}
+function renderSummary(){
+  const f=activeFilters;const parts=[];
+  if(f.cliente)parts.push("Cliente: "+f.cliente);
+  if(f.projeto)parts.push("Projeto: "+f.projeto);
+  if(f.objeto)parts.push("Objeto: "+f.objeto);
+  if(f.status)parts.push("Situação: "+f.status);
+  if(f.ext)parts.push("Tipo: "+f.ext);
+  if(f.versionScope)parts.push("Versão: "+({active:"ativa",first:"primeira",last:"última"}[f.versionScope]));
+  parts.push(`Data de ${labelDateField(f.dateField)}: ${f.start||"início"} a ${f.end||"fim"}`);
+  document.getElementById("filterSummary").textContent=parts.join(" | ");
+  document.getElementById("bucketSummary").textContent=`${filteredRecords.length} grupos de dados + ${filteredPhysical.length} grupos físicos`;
+}
+function renderAll(){renderKPIs();renderSummary();renderTable();updatePreview()}
+function switchTab(t){currentTab=t;currentPage=1;document.getElementById("tabProjeto").classList.toggle("active",t==="projeto");document.getElementById("tabCliente").classList.toggle("active",t==="cliente");renderTable();updatePreview()}
+function toggleColumns(){document.getElementById("columnsPop").classList.toggle("open")}
+function toggleColumn(cb){document.querySelectorAll(".col-"+cb.dataset.col).forEach(el=>el.classList.toggle("hidden-col",!cb.checked))}
+function toggleAdvanced(){document.getElementById("advanced").classList.toggle("open")}
+function tableSearchChanged(){currentPage=1;renderTable();updatePreview()}
+function pageSizeChanged(){currentPage=1;renderTable()}
+function goPage(dir){
+  const q=document.getElementById("tableSearch").value.trim().toLowerCase();
+  const data=currentAggregated.filter(r=>!q||Object.values(r).filter(v=>typeof v!=="object").join(" ").toLowerCase().includes(q));
+  const ps=+document.getElementById("pageSize").value||10;const total=Math.max(1,Math.ceil(data.length/ps));
+  if(dir==="first")currentPage=1;if(dir==="prev")currentPage=Math.max(1,currentPage-1);if(dir==="next")currentPage=Math.min(total,currentPage+1);if(dir==="last")currentPage=total;renderTable();
+}
+function openDrawer(){document.getElementById("drawer").classList.add("open");updatePreview()}
+function closeDrawer(){document.getElementById("drawer").classList.remove("open")}
+function openModal(id){document.getElementById(id).classList.add("open")}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+function updateGb(){
+  gbRate=parseFloat(document.getElementById("gbValue").value||7);renderTable();updatePreview();closeModal("gbModal");toast("Valor do GB atualizado e coluna Valor (R$) recalculada.");
+}
+function saveModel(){toast("Modelo salvo no protótipo. Nenhum dado real foi alterado.")}
+function reportValue(r,key){
+  const map={cliente:r.cliente,projeto:r.projeto,qtd:fmt(r.qtd),img:fmt(r.img),vers:fmt(r.vers),ativos:fmt(r.ativos),tam:fmt(r.tam,2),valor:fmt(r.valor,2),ext:r.ext,meta:fmt(r.meta),metagb:fmt(r.metaGB,2)};
+  return map[key]??"—";
+}
+function updatePreview(){
+  const box=document.getElementById("reportPreview");if(!box)return;
+  const selected=[...document.querySelectorAll("#reportFields input[type=checkbox]:checked")].map(x=>({key:x.dataset.key,label:x.dataset.label}));
+  const source=aggregate(currentTab).slice(0,3);
+  let html=`<div class="preview-head">${document.getElementById("modelName")?.value||"Relatório de Storage"} <span class="badge">${document.getElementById("reportLayout")?.value||""}</span></div>`;
+  html+=`<div class="help" style="margin-bottom:7px">${document.getElementById("filterSummary")?.textContent||""}</div>`;
+  if(!selected.length){html+='<div class="help">Selecione ao menos um campo.</div>';box.innerHTML=html;return}
+  html+='<table class="preview-table"><thead><tr>'+selected.map(f=>`<th>${f.label}</th>`).join("")+'</tr></thead><tbody>';
+  if(!source.length)html+=`<tr><td colspan="${selected.length}">Sem dados no recorte atual.</td></tr>`;
+  else source.forEach(r=>html+='<tr>'+selected.map(f=>`<td>${reportValue(r,f.key)}</td>`).join("")+'</tr>');
+  html+='</tbody></table>';box.innerHTML=html;
+}
+function generateReport(){
+  const fields=[...document.querySelectorAll("#reportFields input[type=checkbox]:checked")];
+  if(!fields.length){toast("Selecione ao menos um campo para o relatório.");return}
+  document.getElementById("jobName").textContent=document.getElementById("modelName").value||"Relatório de Storage";
+  document.getElementById("jobFilters").textContent=document.getElementById("filterSummary").textContent;
+  closeDrawer();openModal("downloadModal");
+}
+function fakeDownload(){toast("Simulação: arquivo XLSX baixado.")}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800)}
+document.addEventListener("click",e=>{const pop=document.getElementById("columnsPop");if(!e.target.closest(".pop-wrap"))pop.classList.remove("open")});
+
+initFilters();
+applyFilters(false);
+</script>
+</body>
+</html>
