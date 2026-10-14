@@ -3,808 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DocZ • Storage V3 Interativo</title>
+<title>DocZ • Storage V5.1 — Relatório em Background</title>
 <style>
-/* ==========================================================================
-   DESIGN SYSTEM SOS DOCS - PADRÃO DOCZ SENTINELA
-   ========================================================================== */
-
 :root{
-  --bg:#f4f7f9;
-  --panel:#fff;
-  --line:#d0d0d0;
-  --line2:#e9ecef;
-  --ink:#333;
-  --ink-strong:#2c363f;
-  --muted:#6c757d;
-  --blue:#0d6efd;
-  --blue-hover:#0b5ed7;
-  --blue-border:#0b5ed7;
-  --blue-soft:#e8f2fc;
-  --nav:#2c363f;
-  --nav-line:#1c262b;
-  --nav-div:#39454f;
-  --warn:#92400e;
-  --warn-bg:#fef3c7;
-  --warn-border:#fcd34d;
-  --ok:#03543f;
-  --ok-bg:#def7ec;
-  --ok-border:#84e1bc;
-  --danger:#9f352b;
-  --danger-bg:#fde8e8;
-  --danger-border:#f8b4b4;
-  --soft:#f5f6f8;
-  --soft-row:#f8f9fa;
+  --bg:#f5f7fa;--panel:#fff;--line:#d9e0e8;--line2:#e8edf2;--ink:#1c2736;
+  --muted:#667386;--blue:#1668c7;--blue2:#eaf3ff;--nav:#263647;--warn:#8a6420;
+  --ok:#2d6b46;--soft:#f9fbfd
 }
-
 *{box-sizing:border-box}
-html{font-size:16px}
-body{
-  margin:0;
-  font-family:'Segoe UI', Roboto, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-  font-size:0.85rem;
-  padding-top:45px;
-  line-height:1.4;
-}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);font-size:13px}
 button,select,input{font:inherit}
+.topbar{height:46px;background:var(--nav);color:#fff;display:flex;align-items:center;padding:0 20px;gap:24px}
+.brand{font-size:21px;font-weight:700}.brand span{color:#7db7ff}
+.topnav{display:flex;gap:20px;font-size:12px}.topnav a{color:#fff;text-decoration:none;padding:16px 0 13px}.topnav a.active{border-bottom:3px solid #4fa3ff}
+.top-search{margin-left:auto;background:#31475d;border:1px solid #4b6075;border-radius:4px;padding:7px 10px;color:#dbe7f4;width:250px}
+.user{width:30px;height:30px;border-radius:50%;background:#66798d;display:grid;place-items:center;font-size:11px}
+.wrap{padding:14px 22px 26px;max-width:1660px;margin:auto}
+.breadcrumb{color:#708093;font-size:12px;margin-bottom:10px}.breadcrumb b{color:#334256}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+h1{font-size:22px;margin:0 0 4px}.subtitle{color:var(--muted)}
+.admin-actions{display:flex;gap:8px}
+.btn{border:1px solid #b9c5d2;background:#fff;color:#263647;border-radius:4px;padding:8px 12px;cursor:pointer;font-weight:600}
+.btn:hover{background:#f4f7fa}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.ghost{color:var(--blue)}
+.btn.small{padding:6px 9px;font-size:12px}.btn.lock:before{content:"";font-size:11px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.filter-card,.table-panel{background:var(--panel);border:1px solid var(--line);border-radius:5px;margin-bottom:12px}
+.filter-card{padding:12px}
+.filter-row{display:grid;grid-template-columns:1.2fr 1.2fr .8fr .9fr 1fr 1.05fr 1.45fr;gap:10px;align-items:end}
+.field label{display:block;font-size:11px;font-weight:700;color:#465467;margin-bottom:5px}
+.field select,.field input{width:100%;height:34px;border:1px solid #cbd5df;border-radius:4px;background:#fff;padding:0 9px;color:#2c3948}
+.date-range{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.filter-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;border-top:1px solid var(--line2);padding-top:10px;gap:12px}
+.help{color:var(--muted);font-size:11px}.help b{color:#425166}.help .pending{color:var(--warn);font-weight:700}
+.adv-link{color:var(--blue);font-weight:700;cursor:pointer}
+.advanced{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);grid-template-columns:1fr 1fr 1fr;gap:10px}.advanced.open{display:grid}
+.applied{margin-top:10px;background:#f8fafc;border:1px solid var(--line2);padding:8px 10px;border-radius:4px;color:#59687a;font-size:11px;display:flex;justify-content:space-between;gap:12px}
+.applied strong{color:#344558}
+.kpi-section{border:1px solid var(--line);background:#fff;border-radius:5px;margin-bottom:10px}
+.kpi-title{padding:8px 11px;border-bottom:1px solid var(--line2);font-weight:700;background:#fbfcfd;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kpi-title-left{display:flex;align-items:center;gap:7px}.kpi-break{font-size:10px;color:#758395;font-weight:400;text-align:right}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr)}.kpi-grid.two{grid-template-columns:repeat(2,1fr)}
+.kpi{padding:12px 14px;border-right:1px solid var(--line2)}.kpi:last-child{border-right:0}
+.kpi-label{color:#5f6d7c;font-size:11px;margin-bottom:6px}.kpi-value{font-size:23px;font-weight:700;color:#234c77}.kpi-sub{margin-top:4px;color:#8390a0;font-size:10px}
+.meta-strip{display:grid;grid-template-columns:1fr 1fr 2fr;gap:0;border:1px dashed #cdd6e0;background:#fbfcfd;border-radius:5px;margin-bottom:12px}
+.meta-box{padding:9px 12px;border-right:1px solid var(--line2)}.meta-box:last-child{border-right:0}.meta-box .value{font-weight:700;color:#34495e;font-size:15px}
+.meta-box .label{font-size:10px;color:#748295;margin-top:3px}
+.panel-head{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.tabs{display:flex;gap:3px}.tab{border:0;background:#eef2f6;padding:8px 12px;cursor:pointer;font-weight:700;color:#47566a;border-radius:4px 4px 0 0}
+.tab.active{background:#fff;color:#111;border:1px solid var(--line);border-bottom-color:#fff;margin-bottom:-11px}
+.panel-tools{display:flex;gap:7px;align-items:center}.grid-wrap{overflow:auto;max-height:405px}
+table{border-collapse:collapse;width:100%;min-width:1600px;font-size:11px}
+th,td{border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:7px 8px;white-space:nowrap;text-align:left}
+th{position:sticky;top:0;background:#f7f9fb;color:#536174;font-weight:700;z-index:1}td.num{text-align:right;font-variant-numeric:tabular-nums}
+.hidden-col{display:none}.empty{text-align:center!important;color:#8090a0;padding:30px!important}
+.table-footer{padding:9px 10px;display:flex;align-items:center;justify-content:space-between;background:#fbfcfd;gap:12px}
+.searchbox{width:235px;border:1px solid #cbd5df;border-radius:4px;padding:7px 9px}
+.pages{display:flex;align-items:center;gap:5px}.page{border:1px solid #cbd5df;background:#fff;border-radius:3px;padding:5px 8px;cursor:pointer}.page.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.bottom-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;flex-wrap:wrap}
+.badge.new{background:var(--blue2);color:var(--blue);font-weight:700}
+.drawer{position:fixed;top:0;right:-460px;width:460px;height:100vh;background:#fff;border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(29,45,65,.14);z-index:20;transition:.25s;display:flex;flex-direction:column}
+.drawer.open{right:0}.drawer-head{padding:17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.drawer-body{padding:15px;overflow:auto;flex:1}
+.drawer-foot{padding:12px 15px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}.drawer h2{margin:0;font-size:18px}
+.x{border:0;background:none;font-size:23px;cursor:pointer;color:#617083}.block-title{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#7a8796;margin:16px 0 8px;font-weight:700}
+.report-field{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);padding:7px 8px;margin-bottom:5px;border-radius:4px;background:#fff}.report-field .drag{color:#a1adba;margin-left:auto}
+.report-preview{border:1px solid var(--line);background:#fafbfd;border-radius:4px;padding:9px;overflow:auto}.preview-head{font-weight:700;font-size:12px;margin-bottom:6px}
+.preview-table{font-size:9px;color:#697687;border-collapse:collapse;min-width:0;width:100%}.preview-table th,.preview-table td{padding:4px;border:1px solid #e6ebf0;white-space:normal}
+.modal-bg{position:fixed;inset:0;background:rgba(28,39,54,.38);z-index:30;display:none;align-items:center;justify-content:center}.modal-bg.open{display:flex}
+.modal{width:440px;background:#fff;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}.modal.wide{width:720px}
+.modal-head{padding:13px 15px;border-bottom:1px solid var(--line);font-weight:700;display:flex;justify-content:space-between}.modal-body{padding:15px}.modal-foot{padding:11px 15px;background:#fafbfd;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+.notice{background:#f4f8fc;border-left:3px solid #8aaed1;padding:9px 10px;color:#536174;font-size:11px;margin-bottom:12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(30px);opacity:0;background:#253648;color:#fff;padding:10px 15px;border-radius:5px;z-index:50;transition:.22s;box-shadow:0 8px 25px rgba(0,0,0,.2);max-width:720px;width:max-content;text-align:center;line-height:1.4}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.columns-pop{position:absolute;right:0;top:38px;width:290px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.12);padding:10px;z-index:10;display:none;border-radius:5px}.columns-pop.open{display:block}
+.pop-wrap{position:relative}.check{display:flex;gap:8px;align-items:center;padding:6px 2px;font-size:12px}
+.job{border:1px solid var(--line);padding:10px;border-radius:4px;display:grid;grid-template-columns:1.4fr .7fr .7fr;gap:10px;align-items:center}.job .status{color:var(--ok);font-weight:700}
+@media(max-width:1100px){.filter-row{grid-template-columns:repeat(2,1fr)}.topnav{display:none}.drawer{width:100%;right:-100%}.kpi-break{display:none}}
 
-/* ==========================================================================
-   TOP NAV - IDÊNTICA AO SENTINELA
-   ========================================================================== */
+.cachebar{border:1px solid #cbd8e6;background:#f8fbff;border-radius:5px;margin-bottom:12px;padding:9px 11px;display:flex;align-items:center;justify-content:space-between;gap:12px}.cacheinfo{display:flex;align-items:center;gap:8px;color:#4a5c70}.cacheinfo b{color:#2c3d50}.dot{width:8px;height:8px;border-radius:50%;background:#4d976b}.badge.ok{background:#eaf6ef;color:#2f6d49;font-weight:700}.badge.warn{background:#fff5de;color:#805b16;font-weight:700}
+.macro-filter-row{display:grid;grid-template-columns:1.35fr 1.35fr 1.2fr auto;gap:10px;align-items:end}.filter-note{margin-top:10px;padding-top:9px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;gap:12px;color:#657487;font-size:11px}.filter-note strong{color:#35465a}
+.transition{margin:0 0 12px;border:1px dashed #cbd3dd;background:#fbfcfd;border-radius:5px;padding:9px 11px;display:flex;justify-content:space-between;gap:15px;align-items:center}.transition strong{color:#3b4d62}
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.multi{border:1px solid var(--line);border-radius:4px;padding:8px}.multi-title{font-weight:700;font-size:11px;margin-bottom:4px;color:#526175}.rule-note{background:#f6f8fb;border:1px solid #e2e8ef;padding:9px 10px;border-radius:4px;font-size:11px;color:#5f6e80;line-height:1.45}.rule-note strong{color:#3b4d62}.removed-note{background:#fff8ea;border:1px solid #f1dfbb;padding:9px 10px;border-radius:4px;font-size:11px;color:#72551d;line-height:1.45}.report-summary{margin-top:8px;border:1px solid var(--line);background:#fafbfd;padding:9px;border-radius:4px;font-size:11px;color:#5d6c7d}
+@media(max-width:1100px){.macro-filter-row{grid-template-columns:1fr 1fr}}
+
+.profile-sim{display:flex;align-items:center;gap:6px;border:1px solid #cbd5df;border-radius:4px;background:#fff;padding:3px 7px;color:#6a7888;font-size:10px}.profile-sim select{border:0;background:#fff;color:#334457;font-weight:700;outline:none;height:28px}.kpi-grid.two{grid-template-columns:repeat(2,1fr)}
+.recipients-modal{width:730px}.recipient-box{border:1px solid var(--line);border-radius:3px;overflow:hidden}.recipient-title{padding:9px 11px;background:#fafbfd;border-bottom:1px solid var(--line);font-weight:700;color:#566475}.recipient-form-head,.recipient-form{display:grid;grid-template-columns:1fr 1fr 180px}.recipient-form-head span{padding:9px 11px;border-right:1px solid var(--line2);font-size:11px;color:#4d5968}.recipient-form{min-height:64px;align-items:center}.recipient-form>input{margin:10px 11px;height:29px;border:1px solid #ccd4dc;padding:5px 8px}.notify-check{height:100%;display:flex;align-items:center;padding-left:12px;border-left:1px solid var(--line2)}.add-recipient{font-size:18px;line-height:1;padding:5px 14px}.recipient-table{min-width:0;width:100%}.recipient-table th,.recipient-table td{position:static;padding:8px 10px}.recipient-table th{text-align:center;background:#fafbfd}.recipient-table td:nth-child(4){text-align:center}.trash{border:0;background:none;cursor:pointer;color:#6d7782;font-size:15px}.admin-hidden{display:none!important}
+
+/* Ajustes visuais alinhados ao padrão final do Storage DocZ */
+:root{
+  --bg:#f4f7f9;--panel:#fff;--line:#d0d0d0;--line2:#e9ecef;--ink:#333;
+  --ink-strong:#2c363f;--muted:#6c757d;--blue:#0d6efd;--blue-hover:#0b5ed7;
+  --blue-border:#0b5ed7;--blue-soft:#e8f2fc;--nav:#2c363f;--nav-line:#1c262b;
+  --nav-div:#39454f;--warn:#92400e;--warn-bg:#fef3c7;--warn-border:#fcd34d;
+  --ok:#03543f;--ok-bg:#def7ec;--ok-border:#84e1bc;--danger:#9f352b;
+  --danger-bg:#fde8e8;--danger-border:#f8b4b4;--soft:#f5f6f8;--soft-row:#f8f9fa
+}
+*{box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:.85rem;line-height:1.4}
+.topbar{height:34px;background:var(--nav);color:#eee;padding:0 2%;gap:16px;border-bottom:1px solid var(--nav-line)}
+.brand{font-size:14px;font-weight:700}.brand span{color:#eee}
+.topnav{gap:12px;font-size:11px}.topnav a{padding:10px 0 8px;color:#eee}
+.topnav a.active{border-bottom:2px solid var(--blue)}
+.top-search{background:#26313a;border:1px solid var(--nav-div);border-radius:3px;height:25px;padding:4px 9px;font-size:11px}
+.user{width:24px;height:24px;border-radius:3px;background:#53616d;font-size:10px}
+.wrap{width:90%;max-width:none;padding:15px 0 26px}
+.breadcrumb{font-size:.775rem;color:var(--muted)}
+.breadcrumb b{color:var(--ink-strong)}
+.page-head{gap:12px;flex-wrap:wrap}
+h1{font-size:1.25rem;color:var(--ink-strong);font-weight:600}
+.subtitle{font-size:.85rem;color:var(--muted)}
+.btn{border:1px solid #ccc;background:#f5f5f5;color:#333;border-radius:4px;padding:6px 16px;font-size:.825rem;font-weight:600;transition:all .15s}
+.btn:hover{background:#e8e8e8;border-color:#aaa}
+.btn.primary{border-color:var(--blue-border);background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-hover);border-color:#0a58ca}
+.btn.ghost{border-color:#ced4da;background:#fff;color:#495057}
+.btn.ghost:hover{background:#f8f9fa;border-color:#adb5bd;color:#495057}
+.btn.small{padding:3px 10px;font-size:.7rem}
+.filter-card,.table-panel,.kpi-section{background:var(--panel);border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.filter-card{padding:1rem 1.25rem}
+.field label{font-size:.65rem;color:#495057;letter-spacing:.02em;text-transform:uppercase}
+.field select,.field input{border:1px solid #ced4da;border-radius:4px;color:var(--ink-strong);font-size:.75rem}
+.field select:focus,.field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(13,110,253,.15)}
+.filter-actions,.filter-note{border-color:var(--line2)}
+.help{color:var(--muted);font-size:.7rem}
+.help b{color:#495057}.help .pending{color:var(--warn)}
+.adv-link{color:var(--blue);font-size:.75rem}
+.advanced{border-top-color:var(--line)}
+.applied{background:var(--soft);border-color:var(--line2);border-radius:4px;color:#59687a;font-size:.7rem}
+.applied strong{color:var(--ink-strong)}
+.cachebar{background:#f8fafc;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:.7rem}
+.cacheinfo{color:#59687a}.cacheinfo b{color:var(--ink-strong)}
+.dot{background:#267a42}
+.kpi-title{padding:.65rem 1.25rem;border-bottom:1px solid var(--line);background:var(--soft);color:var(--ink-strong);font-size:.9rem}
+.kpi-title-left{gap:7px}
+.kpi{padding:12px 14px;border-color:var(--line2)}
+.kpi-label{color:var(--muted);font-size:.7rem}
+.kpi-value{font-size:1.4rem;color:#234c77}
+.kpi-sub{font-size:.65rem}
+.meta-strip{background:var(--panel);border:1px solid var(--line);border-radius:4px}
+.meta-box{border-color:var(--line2)}
+.meta-box .value{color:var(--ink-strong);font-size:.95rem}
+.meta-box .label{font-size:.65rem;color:var(--muted)}
+.panel-head{padding:.65rem 1.25rem;border-color:var(--line);background:var(--soft)}
+.tab{background:transparent;color:#65727c;font-size:.78rem;border-radius:4px;padding:6px 12px}
+.tab:hover{color:var(--ink-strong)}
+.tab.active{background:#fff;color:var(--blue);border:1px solid var(--line);border-bottom-color:#fff}
+table{font-size:.775rem}
+th,td{border-color:var(--line2);padding:.5rem .8rem;color:var(--ink)}
+th{background:var(--soft);color:#495057;font-size:.65rem;text-transform:uppercase;letter-spacing:.02em;border-bottom:2px solid var(--line)}
+tbody tr:hover{background:var(--soft-row)}
+.table-footer{padding:9px 10px;background:var(--soft);border-top:1px solid var(--line)}
+.searchbox{border:1px solid #ced4da;border-radius:4px;height:30px;font-size:.75rem}
+.page{border:1px solid #ced4da;border-radius:3px;padding:4px 9px;font-size:.7rem;color:#495057}
+.page.active{background:var(--blue);border-color:var(--blue)}
+.bottom-actions{margin-top:0}
+.drawer{border-left:1px solid var(--line)}
+.drawer-head,.drawer-foot{background:var(--soft);border-color:var(--line)}
+.drawer h2{font-size:1rem;color:var(--ink-strong)}
+.block-title{font-size:.65rem;color:#7a8796}
+.report-field{border-color:var(--line2);border-radius:4px;font-size:.75rem}
+.report-preview{background:#fafbfd;border-color:var(--line);border-radius:4px}
+.preview-head{font-size:.75rem;color:var(--ink-strong)}
+.preview-table{font-size:.6rem}
+.preview-table th,.preview-table td{font-size:.6rem}
+.modal{border-radius:8px;border:1px solid var(--line);max-height:92vh}
+.modal-head{padding:0 12px;height:38px;border-color:var(--line);background:var(--soft);color:var(--ink-strong);font-size:.82rem;align-items:center}
+.modal-body{overflow:auto}
+.modal-foot{background:#fafbfd;border-color:var(--line)}
+.notice{background:#f4f8fc;border-left-color:#8aaed1;color:#536174;font-size:.7rem;border-radius:0 4px 4px 0}
+.toast{background:#2d3b43;border-radius:4px;font-size:.78rem;padding:.5rem .85rem;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{background:#267a42}
+.columns-pop{border-color:var(--line);border-radius:4px}
+.check{font-size:.72rem}
+.job{border-color:var(--line);border-radius:4px}
+.job .status{color:var(--ok)}
+.profile-sim{border-color:#ced4da;border-radius:4px;font-size:.7rem}
+.profile-sim select{font-size:.75rem}
+.recipients-modal{max-width:98vw}
+.recipient-box{border-color:var(--line)}
+.recipient-title{background:var(--soft);border-color:var(--line);color:#566475}
+.recipient-form-head span{font-size:.65rem;color:#495057;text-transform:uppercase}
+.recipient-form>input{border-color:#ced4da;border-radius:4px}
+.recipient-table th{background:var(--soft);font-size:.65rem}
+@media(max-width:1100px){
+ .wrap{width:90%;padding:12px 0 20px}
+ .topnav{display:none}
+ .filter-row,.macro-filter-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .drawer{width:100%;right:-100%}
+ .kpi-break{display:none}
+}
+@media(max-width:768px){
+ .wrap{width:100%;padding:12px 12px 20px}
+ .filter-row,.macro-filter-row{grid-template-columns:1fr}
+ .filter-note,.cachebar{align-items:flex-start;flex-direction:column}
+ .table-footer{align-items:flex-start;flex-direction:column}
+ .top-search{width:150px}
+ .option-grid{grid-template-columns:1fr}
+ .recipient-form-head,.recipient-form{grid-template-columns:1fr}
+ .recipient-form-head span{display:none}
+ .recipient-form>input{margin:6px 10px}
+ .notify-check{padding:8px 10px;border-left:0}
+}
+
+
+/* Navbar padrão DocZ Sentinela */
+body{padding-top:45px}
 .topNav{
-  background:var(--nav);
-  color:#eee;
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1030;
-  height:34px;
-  border-bottom:1px solid var(--nav-line);
+  background:#2c363f;color:#eee;position:fixed;top:0;width:100%;
+  z-index:1030;height:34px;border-bottom:1px solid #1c262b;
 }
-.topNav .wrapper{
-  position:relative;
-  margin:0 2%;
-  height:34px;
-}
-.topNav .userNav{
-  float:right;
-  font-size:11px;
-  height:34px;
-}
+.topNav .wrapper{position:relative;margin:0 2%;height:34px}
+.topNav .userNav{float:right;font-size:11px;height:34px}
 .topNav .userNav ul{
-  margin:0;
-  padding:0;
-  list-style:none;
-  display:flex;
-  border-right:1px solid var(--nav-div);
-  height:34px;
+  margin:0;padding:0;list-style:none;display:flex;
+  border-right:1px solid #39454f;height:34px;
 }
 .topNav .userNav ul li{
-  border-left:1px solid var(--nav-div);
-  border-right:1px solid var(--nav-line);
-  display:flex;
-  align-items:center;
-  height:34px;
+  border-left:1px solid #39454f;border-right:1px solid #1c262b;
+  display:flex;align-items:center;height:34px;
 }
-.topNav .userNav ul li span,
-.topNav .userNav ul li a{
-  padding:0 14px;
-  color:#eee;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  height:100%;
-  font-size:11px;
-  cursor:pointer;
+.topNav .userNav ul li span,.topNav .userNav ul li a{
+  padding:0 14px;color:#eee;text-decoration:none;display:flex;
+  align-items:center;height:100%;font-size:11px;cursor:pointer;
   transition:background .15s;
 }
-.topNav .userNav ul li a:hover{
-  background:rgba(255,255,255,0.08);
-}
-.topNav .clearfix::after{
-  content:"";
-  clear:both;
-  display:table;
-}
-
-/* ==========================================================================
-   CONTAINER 90% (SEM max-width) + GRID 12 COLUNAS
-   ========================================================================== */
-.page-grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-  width:90%;
-  margin:0 auto;
-  padding:15px 0 26px;
-}
-
-/* ==========================================================================
-   BREADCRUMB
-   ========================================================================== */
-.breadcrumb{
-  grid-column:span 12;
-  background:transparent;
-  padding:0;
-  margin:0;
-  font-size:0.775rem;
-  color:var(--muted);
-}
-.breadcrumb b{color:var(--ink-strong)}
-
-/* ==========================================================================
-   CABEÇALHO DA PÁGINA - 12/12
-   ========================================================================== */
-.page-head{
-  grid-column:span 12;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.page-head h1{
-  font-size:1.25rem;
-  margin:0 0 .25rem;
-  color:var(--ink-strong);
-  font-weight:600;
-}
-.subtitle{
-  color:var(--muted);
-  font-size:0.85rem;
-}
-.admin-actions{display:flex;gap:8px}
-
-/* ==========================================================================
-   BOTÕES - IDÊNTICOS AO SENTINELA
-   ========================================================================== */
-.btn-sos{
-  border:1px solid #ccc;
-  background:#f5f5f5;
-  color:#333;
-  font-weight:600;
-  font-size:0.825rem;
-  padding:6px 16px;
-  border-radius:4px;
-  cursor:pointer;
-  transition:all 0.15s;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  text-decoration:none;
-  line-height:1;
-}
-.btn-sos:hover{
-  background:#e8e8e8;
-  border-color:#aaa;
-}
-.btn-sos-primary{
-  border-color:var(--blue-border);
-  background:var(--blue);
-  color:#fff;
-}
-.btn-sos-primary:hover{
-  background:var(--blue-hover);
-  border-color:#0a58ca;
-  color:#fff;
-}
-.btn-sos-success{
-  border-color:#3a7a5a;
-  background:#e8f5ee;
-  color:#2a5a3a;
-}
-.btn-sos-success:hover{
-  background:#d4ece0;
-  border-color:#2a5a3a;
-  color:#2a5a3a;
-}
-.btn-sos-outline-secondary{
-  border-color:#ced4da;
-  background:#fff;
-  color:#495057;
-}
-.btn-sos-outline-secondary:hover{
-  background:#f8f9fa;
-  border-color:#adb5bd;
-  color:#495057;
-}
-.btn-sos-sm{
-  padding:3px 10px;
-  font-size:0.7rem;
-}
-.btn-sos:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-/* ==========================================================================
-   CARDS / PAINÉIS
-   ========================================================================== */
-.filter-card,
-.table-panel,
-.kpi-section,
-.meta-strip{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:4px;
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
-}
-
-/* ==========================================================================
-   FILTROS - 12/12 COM 2 LINHAS HORIZONTAIS
-   ========================================================================== */
-.filter-card{
-  grid-column:span 12;
-  padding:1rem 1.25rem;
-}
-.filter-row{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-  align-items:end;
-}
-.filter-row .field:nth-child(1){grid-column:span 3}
-.filter-row .field:nth-child(2){grid-column:span 3}
-.filter-row .field:nth-child(3){grid-column:span 2}
-.filter-row .field:nth-child(4){grid-column:span 2}
-.filter-row .field:nth-child(5){grid-column:span 2}
-.filter-row .field:nth-child(6){grid-column:span 3}
-.filter-row .field.period-field{grid-column:span 5}
-.filter-row .filter-actions-inline{
-  grid-column:span 4;
-  display:flex;
-  justify-content:flex-end;
-  align-items:flex-end;
-  gap:8px;
-}
-
-.advanced{
-  display:none;
-  margin-top:10px;
-  padding-top:10px;
-  border-top:1px dashed var(--line);
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-}
-.advanced.open{display:grid}
-.advanced .field{grid-column:span 4}
-
-.field label{
-  display:block;
-  font-size:0.65rem;
-  font-weight:700;
-  color:#495057;
-  margin-bottom:5px;
-  text-transform:uppercase;
-  letter-spacing:.02em;
-}
-.field select,
-.field input{
-  width:100%;
-  height:34px;
-  border:1px solid #ced4da;
-  border-radius:4px;
-  background:#fff;
-  padding:0 10px;
-  color:var(--ink-strong);
-  font-size:0.75rem;
-  transition:all .15s ease-in-out;
-  outline:none;
-}
-.field select:focus,
-.field input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(13,110,253,.15);
-}
-.date-range{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-
-.filter-actions{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:10px;
-  border-top:1px solid var(--line2);
-  padding-top:10px;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.help{color:var(--muted);font-size:0.7rem}
-.help b{color:#495057}
-.help .pending{color:var(--warn);font-weight:700}
-.adv-link{color:var(--blue);font-weight:600;cursor:pointer;font-size:0.75rem}
-.adv-link:hover{text-decoration:underline}
-
-.applied{
-  margin-top:10px;
-  background:var(--soft);
-  border:1px solid var(--line2);
-  padding:8px 10px;
-  border-radius:4px;
-  color:#59687a;
-  font-size:0.7rem;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.applied strong{color:var(--ink-strong)}
-
-/* ==========================================================================
-   KPI SECTIONS - 6/6 LADO A LADO
-   ========================================================================== */
-.kpi-section{
-  grid-column:span 6;
-}
-.kpi-section.full{grid-column:span 12}
-.kpi-title{
-  padding:.65rem 1.25rem;
-  border-bottom:1px solid var(--line);
-  font-weight:600;
-  background:var(--soft);
-  color:var(--ink-strong);
-  font-size:0.9rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-}
-.kpi-title-left{display:flex;align-items:center;gap:7px}
-.kpi-break{font-size:0.65rem;color:var(--muted);font-weight:400;text-align:right}
-
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:0;
-}
-.kpi-grid .kpi{grid-column:span 4}
-.kpi-grid.two .kpi{grid-column:span 6}
-.kpi{
-  padding:12px 14px;
-  border-right:1px solid var(--line2);
-}
-.kpi:last-child{border-right:0}
-.kpi-label{color:var(--muted);font-size:0.7rem;margin-bottom:6px}
-.kpi-value{
-  font-size:1.4rem;
-  font-weight:700;
-  color:#234c77;
-}
-.kpi-sub{margin-top:4px;color:#8390a0;font-size:0.65rem}
-
-/* ==========================================================================
-   BLOCO FÍSICO + METADADOS - 6/6
-   ========================================================================== */
-.meta-strip{
-  grid-column:span 6;
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:0;
-}
-.meta-box{
-  padding:9px 12px;
-  border-right:1px solid var(--line2);
-}
-.meta-box:nth-child(1),
-.meta-box:nth-child(2){grid-column:span 3}
-.meta-box:nth-child(3){grid-column:span 6;border-right:0}
-.meta-box .value{font-weight:700;color:var(--ink-strong);font-size:0.95rem}
-.meta-box .label{font-size:0.65rem;color:var(--muted);margin-top:3px}
-
-/* ==========================================================================
-   TABELAS - 12/12
-   ========================================================================== */
-.table-panel{
-  grid-column:span 12;
-}
-.panel-head{
-  padding:.65rem 1.25rem;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:var(--soft);
-  gap:12px;
-  flex-wrap:wrap;
-}
-.tabs{display:flex;gap:3px}
-.tab{
-  border:1px solid transparent;
-  background:transparent;
-  padding:6px 12px;
-  cursor:pointer;
-  font-weight:600;
-  color:#65727c;
-  font-size:0.78rem;
-  border-radius:4px;
-}
-.tab:hover{color:var(--ink-strong)}
-.tab.active{
-  background:#fff;
-  color:var(--blue);
-  border:1px solid var(--line);
-  border-bottom-color:#fff;
-  margin-bottom:-1px;
-}
-
-.panel-tools{display:flex;gap:7px;align-items:center}
-.grid-wrap{overflow:auto;max-height:405px}
-table{
-  border-collapse:collapse;
-  width:100%;
-  min-width:1600px;
-  font-size:0.775rem;
-}
-th,td{
-  border-right:1px solid var(--line2);
-  border-bottom:1px solid var(--line2);
-  padding:0.5rem 0.8rem;
-  white-space:nowrap;
-  text-align:left;
-  color:var(--ink);
-}
-th{
-  position:sticky;
-  top:0;
-  background:var(--soft);
-  color:#495057;
-  font-weight:700;
-  font-size:0.65rem;
-  text-transform:uppercase;
-  letter-spacing:.02em;
-  border-bottom:2px solid var(--line);
-  z-index:1;
-}
-td.num{text-align:right;font-variant-numeric:tabular-nums}
-.hidden-col{display:none}
-.empty{
-  text-align:center!important;
-  color:#8090a0;
-  padding:30px!important;
-}
-tbody tr:hover{background:var(--soft-row)}
-
-.table-footer{
-  padding:9px 10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:var(--soft);
-  gap:12px;
-  flex-wrap:wrap;
-  border-top:1px solid var(--line);
-}
-.searchbox{
-  width:235px;
-  border:1px solid #ced4da;
-  border-radius:4px;
-  padding:0 10px;
-  height:30px;
-  font-size:0.75rem;
-  outline:none;
-}
-.searchbox:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(13,110,253,.15)}
-
-.pages{display:flex;align-items:center;gap:5px}
-.page{
-  border:1px solid #ced4da;
-  background:#fff;
-  border-radius:3px;
-  padding:4px 9px;
-  cursor:pointer;
-  font-size:0.7rem;
-  color:#495057;
-}
-.page:hover{background:#f8f9fa;border-color:#adb5bd}
-.page.active{
-  background:var(--blue);
-  color:#fff;
-  border-color:var(--blue);
-}
-
-/* ==========================================================================
-   BADGES
-   ========================================================================== */
-.badge{
-  display:inline-block;
-  padding:.15rem .5rem;
-  font-size:0.6rem;
-  font-weight:700;
-  border-radius:99px;
-  border:1px solid #d0d0d0;
-  background:#f0f0f0;
-  color:#555;
-  vertical-align:1px;
-}
-.badge.new{
-  background:var(--blue-soft);
-  border-color:#b6d3f2;
-  color:var(--blue);
-}
-
-/* ==========================================================================
-   BOTÕES INFERIORES - 12/12 ALINHADOS À DIREITA
-   ========================================================================== */
-.bottom-actions{
-  grid-column:span 12;
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-/* ==========================================================================
-   DRAWER
-   ========================================================================== */
-.drawer{
-  position:fixed;
-  top:0;
-  right:-460px;
-  width:460px;
-  height:100vh;
-  background:#fff;
-  border-left:1px solid var(--line);
-  box-shadow:-10px 0 30px rgba(29,45,65,.14);
-  z-index:20;
-  transition:.25s;
-  display:flex;
-  flex-direction:column;
-}
-.drawer.open{right:0}
-.drawer-head{
-  padding:17px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:var(--soft);
-}
-.drawer-body{padding:15px;overflow:auto;flex:1}
-.drawer-foot{
-  padding:12px 15px;
-  border-top:1px solid var(--line);
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  background:var(--soft);
-}
-.drawer h2{margin:0;font-size:1rem;color:var(--ink-strong)}
-
-.x{
-  border:0;
-  background:none;
-  font-size:1.2rem;
-  cursor:pointer;
-  color:#617083;
-  padding:4px 8px;
-  border-radius:4px;
-  line-height:1;
-}
-.x:hover{background:#e2e8f0;color:#000}
-
-.block-title{
-  font-size:0.65rem;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  color:#7a8796;
-  margin:16px 0 8px;
-  font-weight:700;
-}
-
-.report-field{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  border:1px solid var(--line2);
-  padding:7px 8px;
-  margin-bottom:5px;
-  border-radius:4px;
-  background:#fff;
-  font-size:0.75rem;
-}
-.report-field .drag{color:#a1adba;margin-left:auto}
-
-/* ==========================================================================
-   MODAIS
-   ========================================================================== */
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:30;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-}
-.modal-bg.open{display:flex}
-.modal{
-  width:440px;
-  max-width:98vw;
-  background:#fff;
-  border-radius:8px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  overflow:hidden;
-  border:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  max-height:92vh;
-}
-.modal.wide{width:720px}
-.modal-head{
-  padding:0 12px;
-  height:38px;
-  border-bottom:1px solid var(--line);
-  font-weight:700;
-  color:var(--ink-strong);
-  font-size:0.82rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:var(--soft);
-  flex-shrink:0;
-}
-.modal-body{padding:15px;overflow:auto}
-.modal-foot{
-  padding:11px 15px;
-  background:#fafbfd;
-  border-top:1px solid var(--line);
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  flex-shrink:0;
-}
-
-.notice{
-  background:#f4f8fc;
-  border-left:3px solid #8aaed1;
-  padding:9px 10px;
-  color:#536174;
-  font-size:0.7rem;
-  margin-bottom:12px;
-  border-radius:0 4px 4px 0;
-}
-
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
-.toast{
-  position:fixed;
-  bottom:1.2rem;
-  left:50%;
-  transform:translateX(-50%) translateY(30px);
-  opacity:0;
-  background:#2d3b43;
-  color:#fff;
-  padding:.5rem .85rem;
-  border-radius:4px;
-  z-index:50;
-  transition:.22s;
-  box-shadow:0 8px 24px rgba(0,0,0,.2);
-  font-size:0.78rem;
-  min-width:260px;
-  max-width:380px;
-  text-align:center;
-}
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-  background:#267a42;
-}
-
-/* ==========================================================================
-   COLUNAS POP
-   ========================================================================== */
-.pop-wrap{position:relative}
-.columns-pop{
-  position:absolute;
-  right:0;
-  top:38px;
-  width:290px;
-  background:#fff;
-  border:1px solid var(--line);
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  padding:10px;
-  z-index:10;
-  display:none;
-  border-radius:4px;
-}
-.columns-pop.open{display:block}
-.check{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  padding:6px 2px;
-  font-size:0.72rem;
-  cursor:pointer;
-}
-
-/* ==========================================================================
-   JOB
-   ========================================================================== */
-.job{
-  border:1px solid var(--line);
-  padding:10px;
-  border-radius:4px;
-  display:grid;
-  grid-template-columns:1.4fr .7fr .7fr;
-  gap:10px;
-  align-items:center;
-}
-.job .status{color:var(--ok);font-weight:700}
-
-/* ==========================================================================
-   PREVIEW DE RELATÓRIO
-   ========================================================================== */
-.report-preview{
-  border:1px solid var(--line);
-  background:#fafbfd;
-  border-radius:4px;
-  padding:9px;
-  overflow:auto;
-}
-.preview-head{font-weight:700;font-size:0.75rem;margin-bottom:6px;color:var(--ink-strong)}
-.preview-table{
-  font-size:0.6rem;
-  color:#697687;
-  border-collapse:collapse;
-  min-width:0;
-  width:100%;
-}
-.preview-table th,
-.preview-table td{
-  padding:4px;
-  border:1px solid #e6ebf0;
-  white-space:normal;
-  font-size:0.6rem;
-}
-
-/* ==========================================================================
-   RESPONSIVO
-   ========================================================================== */
+.topNav .userNav ul li a:hover{background:rgba(255,255,255,.08)}
+.topNav .clearfix::after{content:"";clear:both;display:table}
 @media(max-width:1100px){
-  .filter-row .field:nth-child(1),
-  .filter-row .field:nth-child(2),
-  .filter-row .field:nth-child(3),
-  .filter-row .field:nth-child(4),
-  .filter-row .field:nth-child(5),
-  .filter-row .field:nth-child(6),
-  .filter-row .field.period-field{grid-column:span 6}
-  .filter-row .filter-actions-inline{grid-column:span 12}
-  .advanced .field{grid-column:span 6}
-  .kpi-section,
-  .meta-strip{grid-column:span 12}
-  .drawer{width:100%;right:-100%}
-  .kpi-break{display:none}
   .topNav .userNav ul li:nth-child(1),
   .topNav .userNav ul li:nth-child(2){display:none}
 }
 @media(max-width:768px){
-  .page-grid{width:100%;padding:12px 12px 20px;gap:12px}
-  .filter-row .field:nth-child(1),
-  .filter-row .field:nth-child(2),
-  .filter-row .field:nth-child(3),
-  .filter-row .field:nth-child(4),
-  .filter-row .field:nth-child(5),
-  .filter-row .field:nth-child(6),
-  .filter-row .field.period-field,
-  .advanced .field{grid-column:span 12}
-  .kpi-grid .kpi{grid-column:span 12;border-right:0;border-bottom:1px solid var(--line2)}
-  .kpi-grid .kpi:last-child{border-bottom:0}
-  .kpi-grid.two .kpi{grid-column:span 12}
-  .meta-box:nth-child(1),
-  .meta-box:nth-child(2),
-  .meta-box:nth-child(3){grid-column:span 12;border-right:0;border-bottom:1px solid var(--line2)}
-  .meta-box:nth-child(3){border-bottom:0}
-  .toast{left:.75rem;right:.75rem;transform:translateY(30px);min-width:0;max-width:none}
-  .toast.show{transform:translateY(0)}
   .topNav .userNav ul li:nth-child(3){display:none}
 }
+
 </style>
 </head>
 <body>
-
 <!-- ===== TOPNAV - IDÊNTICA AO PRIMEIRO ARQUIVO (SENTINELA) ===== -->
 <div class="topNav">
   <div class="wrapper">
@@ -821,132 +254,92 @@ tbody tr:hover{background:var(--soft-row)}
   </div>
 </div>
 
-<main class="page-grid">
-
-  <!-- ===== BREADCRUMB - 12/12 ===== -->
+<main class="wrap">
   <div class="breadcrumb">DocZ &nbsp;›&nbsp; <b>Storage DocZ File Service</b></div>
-
-  <!-- ===== CABEÇALHO - 12/12 ===== -->
   <div class="page-head">
     <div>
-      <h1>Storage <span class="badge new">protótipo V3</span></h1>
-      <div class="subtitle">Dados fictícios para simular filtros, consolidações e geração de relatório.</div>
+      <h1>Storage</h1>
+      <div class="subtitle">Visão consolidada do uso de armazenamento por cliente e projeto.</div>
     </div>
     <div class="admin-actions">
-      <button class="btn-sos" onclick="openModal('configModal')">Configurações</button>
+      <div class="profile-sim"><span>Perfil</span><select id="profileSelect" onchange="setProfile(this.value)"><option value="admin">Administrador</option><option value="operation">Operação / Gerente</option></select></div>
+      <button class="btn admin-only" onclick="openModal('gbModal')">Atualizar Valor do GB</button>
+      <button class="btn admin-only" onclick="openModal('configModal')">Configurações</button>
     </div>
   </div>
 
-  <!-- ===== FILTROS - 12/12 (2 LINHAS HORIZONTAIS) ===== -->
+  <div class="cachebar">
+    <div class="cacheinfo"><span class="dot"></span><div><b>Dados consolidados em cache:</b> 07/10/2026 02:00 atualizado</div></div>
+    <div class="help">Próxima atualização prevista: <b>08/10/2026 02:00</b></div>
+  </div>
+
   <section class="filter-card">
-    <div class="filter-row">
-      <div class="field"><label>Cliente</label><select id="fCliente" onchange="syncProjects()"></select></div>
+    <div class="macro-filter-row">
+      <div class="field"><label>Cliente <span style="color:#b34d48">*</span></label><select id="fCliente" onchange="syncProjects()"></select></div>
       <div class="field"><label>Projeto</label><select id="fProjeto"></select></div>
-      <div class="field"><label>Tipo de objeto</label><select id="fObjeto"><option value="">Todos</option><option>Documentos</option><option>Caixas</option></select></div>
-      <div class="field"><label>Situação do arquivo</label><select id="fStatus"><option value="">Todos</option><option>Ativo</option><option>Versionado</option></select></div>
-      <div class="field"><label>Tipo / extensão</label><select id="fExt"><option value="">Todos</option><option>PDF</option><option>JPG/PNG</option><option>TIFF</option><option>Áudio</option><option>Vídeo</option><option>Outros</option></select></div>
-
-      <div class="field"><label>Considerar data de</label><select id="fDateField"><option value="created">Data de criação</option><option value="updated">Data de atualização</option><option value="versionDate">Data da versão</option></select></div>
-      <div class="field period-field"><label>Período</label><div class="date-range"><input id="fStart" type="date" value="2026-09-01"><input id="fEnd" type="date" value="2026-09-30"></div></div>
-      <div class="filter-actions-inline">
-        <button class="btn-sos" onclick="clearFilters()">Limpar</button>
-        <button class="btn-sos btn-sos-primary" onclick="applyFilters()">Consultar</button>
-      </div>
+      <div class="field"><label>Período de criação</label><div class="date-range"><input id="fStart" type="date" value="2026-09-01"><input id="fEnd" type="date" value="2026-09-30"></div></div>
+      <div><button class="btn" onclick="clearFilters()">Limpar</button> <button class="btn primary" onclick="applyFilters()">Consultar</button></div>
     </div>
-
-    <div class="advanced" id="advanced">
-      <div class="field"><label>Critério de versão <span class="badge new">simulação</span></label>
-        <select id="fVersionScope"><option value="">Todas as versões</option><option value="active">Somente versão ativa</option><option value="first">Primeira versão</option><option value="last">Última versão</option></select>
-      </div>
-      <div class="field"><label>Origem</label><select id="fOrigin"><option value="">Todas</option><option>Object View</option><option>Repositório físico</option></select></div>
-      <div class="field"><label>Incluir no cálculo</label><select id="fCalc"><option value="both">Arquivos + imagens</option><option value="files">Somente arquivos</option><option value="images">Somente imagens</option></select></div>
+    <div class="filter-note">
+      <div>O período considera a <b>data de criação</b>.</div>
+      <div id="scopeHint"></div>
     </div>
-
-    <div class="filter-actions">
-      <div><a class="adv-link" onclick="toggleAdvanced()">+ Filtros avançados</a>
-        <span class="help">&nbsp;&nbsp;•&nbsp;&nbsp; Limite/período máximo do relatório: <span class="pending">a definir na especificação</span></span>
-      </div>
-    </div>
-
-    <div class="applied">
-      <div><strong>Recorte aplicado:</strong> <span id="filterSummary">carregando...</span></div>
-      <div><strong id="bucketSummary"></strong></div>
-    </div>
+    <select id="fObjeto" style="display:none"><option value="" selected>Todos</option></select>
+    <select id="fStatus" style="display:none"><option value="" selected>Todos</option></select>
+    <select id="fExt" style="display:none"><option value="" selected>Todos</option></select>
+    <select id="fDateField" style="display:none"><option value="created" selected>Data de criação</option></select>
+    <select id="fVersionScope" style="display:none"><option value="" selected>Todas</option></select>
+    <select id="fOrigin" style="display:none"><option value="" selected>Todas</option></select>
+    <select id="fCalc" style="display:none"><option value="both" selected>Arquivos + imagens</option></select>
+    <div class="applied"><div><strong>Recorte aplicado:</strong> <span id="filterSummary">selecione um cliente</span></div><div><strong id="bucketSummary"></strong></div></div>
   </section>
 
-  <!-- ===== KPI: ATIVOS - 6/12 ===== -->
   <section class="kpi-section" id="sectionActive">
     <div class="kpi-title">
-      <div class="kpi-title-left">Arquivos Ativos <span class="badge">estrutura atual preservada</span></div>
-      <div class="kpi-break" id="activeBreakdown">—</div>
+      <div class="kpi-title-left">Arquivos Ativos</div>
+      
     </div>
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="activeFiles">0</div><div class="kpi-sub">Última versão ativa / disponível na Object View</div></div>
       <div class="kpi"><div class="kpi-label">Volume de Imagens</div><div class="kpi-value" id="activeImages">0</div><div class="kpi-sub">Imagens vinculadas aos arquivos ativos</div></div>
-      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="activeGB">0,00</div><div class="kpi-sub" id="activeCalcHint">Arquivos + imagens</div></div>
+      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="activeGB">0,00</div><div class="kpi-sub">Valor consolidado do cache</div></div>
     </div>
   </section>
 
-  <!-- ===== KPI: VERSIONADOS - 6/12 ===== -->
   <section class="kpi-section" id="sectionVersioned">
     <div class="kpi-title">
-      <div class="kpi-title-left">Arquivos Versionados <span class="badge">terminologia atual preservada</span></div>
-      <div class="kpi-break" id="versionedBreakdown">—</div>
+      <div class="kpi-title-left">Arquivos Versionados</div>
+      
     </div>
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="versionedFiles">0</div></div>
       <div class="kpi"><div class="kpi-label">Volume de Imagens</div><div class="kpi-value" id="versionedImages">0</div></div>
-      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="versionedGB">0,00</div><div class="kpi-sub" id="versionedCalcHint">Arquivos + imagens</div></div>
+      <div class="kpi"><div class="kpi-label">Ocupação (GB)</div><div class="kpi-value" id="versionedGB">0,00</div><div class="kpi-sub">Valor consolidado do cache</div></div>
     </div>
   </section>
 
-  <!-- ===== FÍSICO - 6/12 ===== -->
-  <section class="kpi-section">
-    <div class="kpi-title"><div class="kpi-title-left">Repositório Físico (HD)</div><div class="kpi-break">Respeita o recorte selecionado</div></div>
+  <section class="kpi-section" id="sectionPhysical">
+    <div class="kpi-title"><div class="kpi-title-left">Repositório Físico (HD)</div></div>
     <div class="kpi-grid two">
       <div class="kpi"><div class="kpi-label">Quantidade de Arquivos</div><div class="kpi-value" id="physicalFiles">0</div></div>
       <div class="kpi"><div class="kpi-label">Ocupação do Repositório (GB)</div><div class="kpi-value" id="physicalGB">0,00</div></div>
     </div>
   </section>
 
-  <!-- ===== METADADOS - 6/12 ===== -->
-  <section class="meta-strip">
-    <div class="meta-box"><div class="value" id="metaCount">0</div><div class="label">Qtd. de metadados preenchidos <span class="badge new">novo</span></div></div>
-    <div class="meta-box"><div class="value" id="metaGB">0,00 GB</div><div class="label">Ocupação estimada dos metadados <span class="badge new">novo</span></div></div>
-    <div class="meta-box"><div class="label"><b>Observação do protótipo:</b> os números de metadados são fictícios para demonstrar comportamento. A regra real de medição no banco ainda precisa ser definida tecnicamente.</div></div>
-  </section>
-
-  <!-- ===== TABELA - 12/12 ===== -->
   <section class="table-panel">
     <div class="panel-head">
       <div class="tabs">
         <button class="tab active" id="tabProjeto" onclick="switchTab('projeto')">Storage por Projeto</button>
-        <button class="tab" id="tabCliente" onclick="switchTab('cliente')">Storage por Cliente</button>
+        <button class="tab admin-only" id="tabCliente" onclick="switchTab('cliente')">Storage por Cliente</button>
       </div>
-      <div class="panel-tools">
-        <span id="resultCount" class="help">0 registros</span>
-        <div class="pop-wrap">
-          <button class="btn-sos btn-sos-sm" onclick="toggleColumns()">Colunas</button>
-          <div class="columns-pop" id="columnsPop">
-            <b>Colunas adicionais</b>
-            <label class="check"><input type="checkbox" data-col="tipo" onchange="toggleColumn(this)"> Tipo de objeto</label>
-            <label class="check"><input type="checkbox" data-col="extensao" onchange="toggleColumn(this)"> Tipo / extensão</label>
-            <label class="check"><input type="checkbox" data-col="metaqtd" onchange="toggleColumn(this)"> Qtd. Metadados <span class="badge new">novo</span></label>
-            <label class="check"><input type="checkbox" data-col="metagb" onchange="toggleColumn(this)"> Ocupação Metadados (GB) <span class="badge new">novo</span></label>
-            <div class="help" style="margin-top:7px">As colunas atuais permanecem exibidas por padrão.</div>
-          </div>
-        </div>
-      </div>
+      <div class="panel-tools"><span id="resultCount" class="help">0 registros</span></div>
     </div>
-
     <div class="grid-wrap">
       <table id="storageTable">
         <thead><tr>
           <th>Alias</th><th>Nome Cliente</th><th>CNPJ</th><th>ID Projeto</th><th>Nome Projeto</th>
-          <th>Qtd Arquivos</th><th>Qtd Imagens</th><th class="status-col-versioned">Arquivos Versionados</th><th class="status-col-active">Arquivos Ativos</th>
-          <th>Tamanho (GB)</th><th>Valor (R$)</th><th>Arquivos Excluídos</th><th>Qtd Arquivos no Storage</th><th>Ocupação Repositório Físico</th>
-          <th class="hidden-col col-tipo">Tipo de objeto</th><th class="hidden-col col-extensao">Tipo / extensão</th>
-          <th class="hidden-col col-metaqtd">Qtd. Metadados</th><th class="hidden-col col-metagb">Ocupação Metadados (GB)</th>
+          <th>Quantidade de Arquivos</th><th>Quantidade de Imagens</th><th class="status-col-versioned">Arquivos Versionados</th><th class="status-col-active">Arquivos Ativos</th>
+          <th>Tamanho (GB)</th><th>Valor (R$)</th><th>Arquivos Excluídos</th><th>Quantidade de Arquivos no Storage</th><th>Ocupação do Storage (GB)</th>
         </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -955,7 +348,7 @@ tbody tr:hover{background:var(--soft-row)}
     <div class="table-footer">
       <div style="display:flex;gap:8px;align-items:center">
         <input class="searchbox" id="tableSearch" placeholder="Buscar na grade..." oninput="tableSearchChanged()">
-        <select id="pageSize" class="btn-sos btn-sos-sm" onchange="pageSizeChanged()"><option>5</option><option selected>10</option><option>20</option></select>
+        <select id="pageSize" class="btn small" onchange="pageSizeChanged()"><option>5</option><option selected>10</option><option>20</option></select>
       </div>
       <div class="pages">
         <button class="page" onclick="goPage('first')">Primeiro</button><button class="page" onclick="goPage('prev')">Anterior</button>
@@ -965,70 +358,108 @@ tbody tr:hover{background:var(--soft-row)}
     </div>
   </section>
 
-  <!-- ===== BOTÕES INFERIORES - 12/12 ===== -->
   <div class="bottom-actions">
-    <button class="btn-sos btn-sos-outline-secondary" onclick="openDrawer()">Configurar Relatório</button>
-    <button class="btn-sos" onclick="openModal('gbModal')">Atualizar Valor do GB</button>
-    <button class="btn-sos" onclick="openModal('configModal')">Configurações</button>
-    <button class="btn-sos btn-sos-primary" onclick="generateReport()">Exportar Relatório</button>
+    <button class="btn primary" onclick="openDrawer()">Configurar e Gerar Relatório</button>
   </div>
-
 </main>
 
-<!-- ===== DRAWER ===== -->
 <aside class="drawer" id="drawer">
   <div class="drawer-head">
-    <div><h2>Configurar Relatório</h2><div class="help">Infraestrutura do Espelho Personalizado aplicada ao Storage.</div></div>
+    <div><h2>Configurar Relatório de Storage</h2><div class="help">Relatório detalhado disponibilizado na Central de Download.</div></div>
     <button class="x" onclick="closeDrawer()">×</button>
   </div>
   <div class="drawer-body">
+    <div class="rule-note"><strong>Recorte herdado da tela:</strong><br><span id="reportScope">—</span></div>
+    <div class="block-title">Modelo do relatório</div>
     <div class="field"><label>Nome do modelo</label><input id="modelName" value="Relatório de Storage - Operação"></div>
-    <div class="field" style="margin-top:9px"><label>Layout</label><select id="reportLayout" onchange="updatePreview()"><option>Modelo 1 — Analítico</option><option>Modelo 2 — Resumido</option><option>Modelo 3 — Faturamento</option><option>Modelo 4 — Executivo</option></select></div>
-    <div class="block-title">Campos do relatório</div>
-    <div id="reportFields">
-      <label class="report-field"><input data-key="cliente" data-label="Cliente" type="checkbox" checked onchange="updatePreview()"> Cliente <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="projeto" data-label="Projeto" type="checkbox" checked onchange="updatePreview()"> Projeto <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="qtd" data-label="Qtd. Arquivos" type="checkbox" checked onchange="updatePreview()"> Qtd. Arquivos <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="img" data-label="Qtd. Imagens" type="checkbox" checked onchange="updatePreview()"> Qtd. Imagens <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="vers" data-label="Arquivos Versionados" type="checkbox" checked onchange="updatePreview()"> Arquivos Versionados <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="ativos" data-label="Arquivos Ativos" type="checkbox" checked onchange="updatePreview()"> Arquivos Ativos <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="tam" data-label="Tamanho (GB)" type="checkbox" checked onchange="updatePreview()"> Tamanho (GB) <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="valor" data-label="Valor (R$)" type="checkbox" checked onchange="updatePreview()"> Valor (R$) <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="ext" data-label="Tipo / extensão" type="checkbox" onchange="updatePreview()"> Tipo / extensão <span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="meta" data-label="Qtd. Metadados" type="checkbox" onchange="updatePreview()"> Qtd. Metadados <span class="badge new">novo</span><span class="drag">⋮⋮</span></label>
-      <label class="report-field"><input data-key="metagb" data-label="Ocupação Metadados (GB)" type="checkbox" onchange="updatePreview()"> Ocupação Metadados (GB) <span class="badge new">novo</span><span class="drag">⋮⋮</span></label>
+    <div class="field" style="margin-top:9px"><label>Layout</label><select id="reportLayout"><option>Modelo 1 — Analítico</option><option>Modelo 2 — Resumido</option><option>Modelo 3 — Faturamento</option><option>Modelo 4 — Executivo</option></select></div>
+
+    <div class="block-title">Detalhamento do relatório</div>
+    <div class="option-grid">
+      <div class="field"><label>Tipo de objeto</label><select id="rObjeto"><option value="">Todos</option><option>Documentos</option><option>Caixas</option></select></div>
+      <div class="field"><label>Situação do arquivo</label><select id="rStatus"><option value="">Todos</option><option>Ativo</option><option>Versionado</option></select></div>
     </div>
+    <div class="multi" style="margin-top:8px">
+      <div class="multi-title">Extensões / tipos de arquivo</div>
+      <div class="option-grid">
+        <label class="check"><input class="rExt" type="checkbox" value="PDF" checked> PDF</label>
+        <label class="check"><input class="rExt" type="checkbox" value="JPG/PNG" checked> JPG / PNG</label>
+        <label class="check"><input class="rExt" type="checkbox" value="TIFF" checked> TIFF</label>
+        <label class="check"><input class="rExt" type="checkbox" value="Áudio" checked> Áudio</label>
+        <label class="check"><input class="rExt" type="checkbox" value="Vídeo" checked> Vídeo</label>
+        <label class="check"><input class="rExt" type="checkbox" value="Outros" checked> Outros</label>
+      </div>
+    </div>
+
+    <div class="block-title">Agrupamentos</div>
+    <div class="multi">
+      <label class="check"><input class="rGroup" type="checkbox" value="Projeto" checked> Projeto</label>
+      <label class="check"><input class="rGroup" type="checkbox" value="Tipo de objeto"> Tipo de objeto</label>
+      <label class="check"><input class="rGroup" type="checkbox" value="Situação"> Situação do arquivo</label>
+      <label class="check"><input class="rGroup" type="checkbox" value="Extensão"> Tipo / extensão</label>
+    </div>
+
+    <div class="block-title">Campos disponíveis</div>
+    <div id="reportFields">
+      <label class="report-field"><input data-key="cliente" type="checkbox" checked> Cliente <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="projeto" type="checkbox" checked> Projeto <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="qtd" type="checkbox" checked> Quantidade de Arquivos <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="img" type="checkbox" checked> Quantidade de Imagens <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="vers" type="checkbox" checked> Arquivos Versionados <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="ativos" type="checkbox" checked> Arquivos Ativos <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="tam" type="checkbox" checked> Tamanho dos Arquivos (GB) <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="meta" type="checkbox" checked> Quantidade de Metadados Preenchidos <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="metaGB" type="checkbox" checked> Ocupação dos Metadados no Banco (GB) <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="valor" type="checkbox" checked> Valor (R$) <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="ext" type="checkbox"> Tipo / extensão <span class="drag">⋮⋮</span></label>
+      <label class="report-field"><input data-key="objeto" type="checkbox"> Tipo de objeto <span class="drag">⋮⋮</span></label>
+    </div>
+
+
     <div class="block-title">Apresentação</div>
-    <label class="check"><input type="checkbox" checked> Exibir nome dos campos</label>
-    <label class="check"><input type="checkbox" checked> Incluir logo</label>
-    <label class="check"><input type="checkbox" checked> Exibir filtros aplicados no relatório</label>
-    <label class="check"><input type="checkbox" checked> Exibir regra/critério utilizado no cálculo</label>
-    <div class="block-title">Pré-visualização</div>
-    <div class="report-preview" id="reportPreview"></div>
+    <label class="check"><input type="checkbox" checked> Exibir filtros aplicados</label>
+    <label class="check"><input type="checkbox" checked> Exibir data de referência do cache</label>
+    <label class="check"><input type="checkbox" checked> Exibir regra temporal utilizada</label>
+    <label class="check"><input type="checkbox" checked> Incluir logo / cabeçalho do modelo</label>
+    <div class="report-summary" id="reportSummary">Configure o detalhamento para estimar o recorte do relatório.</div>
   </div>
-  <div class="drawer-foot"><button class="btn-sos" onclick="closeDrawer()">Cancelar</button><button class="btn-sos btn-sos-outline-secondary" onclick="saveModel()">Salvar modelo</button><button class="btn-sos btn-sos-primary" onclick="generateReport()">Gerar relatório</button></div>
+  <div class="drawer-foot"><button class="btn" onclick="closeDrawer()">Cancelar</button><button class="btn ghost" onclick="saveModel()">Salvar modelo</button><button class="btn primary" onclick="generateReport()">Gerar Relatório</button></div>
 </aside>
 
-<!-- ===== MODAIS ===== -->
 <div class="modal-bg" id="gbModal">
   <div class="modal">
     <div class="modal-head"><span>Atualizar Valor do GB</span><button class="x" onclick="closeModal('gbModal')">×</button></div>
     <div class="modal-body">
-      <div class="notice">Ação administrativa preservada da tela atual. O valor informado recalcula a coluna <b>Valor (R$)</b> no protótipo.</div>
+      <div class="notice">Informe o valor do GB utilizado no cálculo do campo <b>Valor (R$)</b>.</div>
       <div class="field"><label>Valor do GB (R$)</label><input id="gbValue" type="number" step="0.01" value="7.00"></div>
     </div>
-    <div class="modal-foot"><button class="btn-sos" onclick="closeModal('gbModal')">Cancelar</button><button class="btn-sos btn-sos-primary" onclick="updateGb()">Atualizar valor</button></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('gbModal')">Cancelar</button><button class="btn primary" onclick="updateGb()">Atualizar valor</button></div>
   </div>
 </div>
 
 <div class="modal-bg" id="configModal">
-  <div class="modal wide">
-    <div class="modal-head"><span>Configurações de Storage</span><button class="x" onclick="closeModal('configModal')">×</button></div>
+  <div class="modal recipients-modal">
+    <div class="modal-head"><span>Configurações de Destinatários</span><button class="x" onclick="closeModal('configModal')">×</button></div>
     <div class="modal-body">
-      <div class="notice">Área administrativa preservada como referência. Esta V3 concentra a evolução em consulta, filtros e relatório.</div>
-      <div class="field"><label>Perfil de acesso</label><input value="Administrador — acesso a configurações e atualização do valor do GB" disabled></div>
+      <div class="recipient-box">
+        <div class="recipient-title">Novo(s) Destinatário(s):</div>
+        <div class="recipient-form-head"><span>Nome Completo</span><span>E-mail</span><span>Notificar E-mail</span></div>
+        <div class="recipient-form">
+          <input id="newRecipientName" type="text">
+          <input id="newRecipientEmail" type="email">
+          <label class="notify-check"><input id="newRecipientNotify" type="checkbox" checked></label>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin:12px 0 18px"><button class="btn primary add-recipient" onclick="addRecipient()">+</button></div>
+      <div class="recipient-box">
+        <div class="recipient-title">Destinatário(s):</div>
+        <table class="recipient-table">
+          <thead><tr><th style="width:34px"></th><th>Nome</th><th>E-mail</th><th style="width:95px;text-align:center">Notificar E-mail</th><th style="width:42px"></th></tr></thead>
+          <tbody id="recipientBody"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="modal-foot"><button class="btn-sos btn-sos-primary" onclick="closeModal('configModal')">Fechar</button></div>
+    <div class="modal-foot"><button class="btn primary" onclick="saveRecipients()">Salvar Configurações</button></div>
   </div>
 </div>
 
@@ -1036,14 +467,14 @@ tbody tr:hover{background:var(--soft-row)}
   <div class="modal wide">
     <div class="modal-head"><span>Central de Download — simulação</span><button class="x" onclick="closeModal('downloadModal')">×</button></div>
     <div class="modal-body">
-      <div class="notice">O relatório abaixo foi gerado a partir dos filtros e campos selecionados neste protótipo.</div>
+      <div class="notice">Relatório detalhado solicitado. O processamento ocorre em segundo plano e o resultado fica disponível na Central de Download.</div>
       <div class="job">
         <div><b id="jobName">Relatório de Storage</b><div class="help" id="jobFilters"></div></div>
         <div><span class="status">Disponível</span><div class="help">XLSX editável</div></div>
-        <div style="text-align:right"><button class="btn-sos btn-sos-sm btn-sos-primary" onclick="fakeDownload()">Baixar arquivo</button></div>
+        <div style="text-align:right"><button class="btn small primary" onclick="fakeDownload()">Baixar arquivo</button></div>
       </div>
     </div>
-    <div class="modal-foot"><button class="btn-sos" onclick="closeModal('downloadModal')">Fechar</button></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('downloadModal')">Fechar</button></div>
   </div>
 </div>
 
@@ -1107,6 +538,12 @@ const physicalRecords = [
   {cliente:"ABDI",id:"105",projeto:"ABDI",objeto:"Documentos",status:"Ativo",ext:"Outros",created:"2026-09-15",updated:"2026-09-20",versionDate:"2026-09-20",qty:9300,gb:46.00}
 ];
 
+let currentProfile = "admin";
+let recipients = [
+  {name:"thanner machado",email:"dfghedfgg@sosdocs.com.br",notify:true},
+  {name:"carolyne sobreira",email:"carolyne.ferreira@sosdocs.com.br",notify:true},
+  {name:"amanda",email:"amanda.carvalho@sosdocs.com.br",notify:true}
+];
 let activeFilters = {};
 let filteredRecords = [];
 let filteredPhysical = [];
@@ -1126,20 +563,30 @@ function totalGB(r,mode){
 function option(el,value,label){const o=document.createElement("option");o.value=value;o.textContent=label;el.appendChild(o)}
 function initFilters(){
   const c=document.getElementById("fCliente");
-  c.innerHTML="";option(c,"","Todos os clientes");
-  uniq(records.map(r=>r.cliente)).sort().forEach(v=>option(c,v,v));
+  c.innerHTML="";
+  if(currentProfile==="admin") option(c,"__ALL__","Todos os clientes");
+  const allowed=currentProfile==="admin"?uniq(records.map(r=>r.cliente)).sort():["Prefeitura Municipal de Abadiânia"];
+  allowed.forEach(v=>option(c,v,v));
+  if(currentProfile==="admin") c.value="__ALL__"; else c.value=allowed[0]||"";
   syncProjects();
 }
 function syncProjects(){
-  const client=document.getElementById("fCliente").value;
+  const clientRaw=document.getElementById("fCliente").value;
+  const allClients=clientRaw==="__ALL__";
   const p=document.getElementById("fProjeto");
-  const old=p.value;p.innerHTML="";option(p,"","Todos os projetos");
-  uniq(records.filter(r=>!client||r.cliente===client).map(r=>r.projeto)).sort().forEach(v=>option(p,v,v));
-  if([...p.options].some(o=>o.value===old))p.value=old;
+  const old=p.value;p.innerHTML="";option(p,"",allClients?"Todos os projetos":"Todos os projetos do cliente");
+  if(!allClients){
+    uniq(records.filter(r=>r.cliente===clientRaw).map(r=>r.projeto)).sort().forEach(v=>option(p,v,v));
+    p.disabled=false;
+    if([...p.options].some(o=>o.value===old))p.value=old;
+  }else{
+    p.disabled=true;p.value="";
+  }
+  updateActionAvailability();
 }
 function readFilters(){
   return {
-    cliente:document.getElementById("fCliente").value,
+    cliente:(document.getElementById("fCliente").value==="__ALL__"?"":document.getElementById("fCliente").value),
     projeto:document.getElementById("fProjeto").value,
     objeto:document.getElementById("fObjeto").value,
     status:document.getElementById("fStatus").value,
@@ -1176,19 +623,18 @@ function recordMatches(r,f,isPhysical=false){
 }
 function applyFilters(showToast=true){
   activeFilters=readFilters();
+  if(currentProfile!=="admin" && !activeFilters.cliente){toast("Selecione um cliente para executar a consulta.");return;}
   filteredRecords=records.filter(r=>recordMatches(r,activeFilters,false));
   filteredPhysical=physicalRecords.filter(r=>recordMatches(r,activeFilters,true));
   currentPage=1;
   renderAll();
-  if(showToast)toast("Filtros aplicados: indicadores, grade e preview foram recalculados.");
+  if(showToast)toast("Consulta atualizada.");
 }
 function clearFilters(){
-  document.getElementById("fCliente").value="";syncProjects();
-  ["fProjeto","fObjeto","fStatus","fExt","fVersionScope","fOrigin"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("fDateField").value="created";
+  initFilters();
   document.getElementById("fStart").value="2026-09-01";document.getElementById("fEnd").value="2026-09-30";
-  document.getElementById("fCalc").value="both";
-  applyFilters(false);toast("Filtros restaurados para o recorte padrão do protótipo.");
+  activeFilters={};filteredRecords=[];filteredPhysical=[];currentPage=1;
+  applyFilters(false);toast("Filtros limpos.");
 }
 function calcOccupation(arr){
   return arr.reduce((a,r)=>a+totalGB(r,activeFilters.calc),0)
@@ -1202,13 +648,8 @@ function breakdown(arr){
 function renderKPIs(){
   const active=filteredRecords.filter(r=>r.status==="Ativo");
   const ver=filteredRecords.filter(r=>r.status==="Versionado");
-
-  const onlyActive = activeFilters.status==="Ativo";
-  const onlyVersioned = activeFilters.status==="Versionado";
-  document.getElementById("sectionActive").style.display = onlyVersioned ? "none" : "";
-  document.getElementById("sectionVersioned").style.display = onlyActive ? "none" : "";
-  document.querySelectorAll(".status-col-active").forEach(el=>{el.style.display = onlyVersioned ? "none" : "";});
-  document.querySelectorAll(".status-col-versioned").forEach(el=>{el.style.display = onlyActive ? "none" : "";});
+  document.getElementById("sectionActive").style.display="";
+  document.getElementById("sectionVersioned").style.display="";
   document.getElementById("activeFiles").textContent=fmt(sum(active,"qtd"));
   document.getElementById("activeImages").textContent=fmt(sum(active,"img"));
   document.getElementById("activeGB").textContent=fmt(calcOccupation(active),2);
@@ -1217,37 +658,26 @@ function renderKPIs(){
   document.getElementById("versionedGB").textContent=fmt(calcOccupation(ver),2);
   document.getElementById("physicalFiles").textContent=fmt(sum(filteredPhysical,"qty"));
   document.getElementById("physicalGB").textContent=fmt(sum(filteredPhysical,"gb"),2);
-  document.getElementById("activeBreakdown").textContent=breakdown(active);
-  document.getElementById("versionedBreakdown").textContent=breakdown(ver);
-  const hint=activeFilters.calc==="files"?"Somente arquivos":activeFilters.calc==="images"?"Somente imagens":"Arquivos + imagens";
-  document.getElementById("activeCalcHint").textContent=hint;
-  document.getElementById("versionedCalcHint").textContent=hint;
-  document.getElementById("metaCount").textContent=fmt(sum(filteredRecords,"meta"));
-  document.getElementById("metaGB").textContent=fmt(sum(filteredRecords,"metaGB"),2)+" GB";
 }
 function aggregate(group){
   const map={};
   filteredRecords.forEach(r=>{
     const key=group==="cliente"?r.cliente:r.id;
-    if(!map[key])map[key]={
-      alias:group==="cliente"?"—":r.alias,cliente:r.cliente,cnpj:r.cnpj,id:group==="cliente"?"—":r.id,
-      projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0,
-      tipos:new Set(),exts:new Set(),meta:0,metaGB:0
-    };
+    if(!map[key])map[key]={alias:group==="cliente"?"—":r.alias,cliente:r.cliente,cnpj:r.cnpj,id:group==="cliente"?"—":r.id,projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0};
     const a=map[key];
-    a.qtd+=r.qtd;a.img+=r.img;a.tam+=totalGB(r,activeFilters.calc);a.exc+=r.exc;a.meta+=r.meta;a.metaGB+=r.metaGB;
+    a.qtd+=r.qtd;a.img+=r.img;a.tam+=totalGB(r,activeFilters.calc);a.exc+=r.exc;
     if(r.status==="Ativo")a.ativos+=r.qtd;else if(r.status==="Versionado")a.vers+=r.qtd;
-    a.tipos.add(r.objeto);a.exts.add(r.ext);
   });
   filteredPhysical.forEach(r=>{
     const key=group==="cliente"?r.cliente:r.id;
     if(!map[key]){
       const base=records.find(x=>x.id===r.id)||{};
-      map[key]={alias:group==="cliente"?"—":base.alias||"—",cliente:r.cliente,cnpj:base.cnpj||"—",id:group==="cliente"?"—":r.id,projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0,tipos:new Set(),exts:new Set(),meta:0,metaGB:0};
+      map[key]={alias:group==="cliente"?"—":base.alias||"—",cliente:r.cliente,cnpj:base.cnpj||"—",id:group==="cliente"?"—":r.id,projeto:group==="cliente"?"Consolidado do cliente":r.projeto,qtd:0,img:0,vers:0,ativos:0,tam:0,valor:0,exc:0,storage:0,repo:0};
     }
-    map[key].storage+=r.qty;map[key].repo+=r.gb;
+    map[key].storage+=r.qty;
+    map[key].repo+=r.gb;
   });
-  return Object.values(map).map(a=>({...a,valor:a.tam*gbRate,tipo:[...a.tipos].join(", ")||"—",ext:[...a.exts].join(", ")||"—"}));
+  return Object.values(map).map(a=>({...a,valor:a.tam*gbRate}));
 }
 function renderTable(){
   currentAggregated=aggregate(currentTab);
@@ -1258,45 +688,32 @@ function renderTable(){
   const start=(currentPage-1)*ps;const page=data.slice(start,start+ps);
   const body=document.getElementById("tbody");body.innerHTML="";
   if(!page.length){
-    const tr=document.createElement("tr");tr.innerHTML='<td colspan="18" class="empty">Nenhum dado encontrado para o recorte aplicado.</td>';body.appendChild(tr);
+    const tr=document.createElement("tr");tr.innerHTML='<td colspan="14" class="empty">Nenhum dado encontrado para o recorte aplicado.</td>';body.appendChild(tr);
   }else{
     page.forEach(r=>{
       const tr=document.createElement("tr");
       tr.innerHTML=`<td>${r.alias}</td><td>${r.cliente}</td><td>${r.cnpj}</td><td>${r.id}</td><td>${r.projeto}</td>
       <td class="num">${fmt(r.qtd)}</td><td class="num">${fmt(r.img)}</td><td class="num status-col-versioned">${fmt(r.vers)}</td><td class="num status-col-active">${fmt(r.ativos)}</td>
-      <td class="num">${fmt(r.tam,2)}</td><td class="num">${fmt(r.valor,2)}</td><td class="num">${fmt(r.exc)}</td><td class="num">${fmt(r.storage)}</td><td class="num">${fmt(r.repo,2)}</td>
-      <td class="hidden-col col-tipo">${r.tipo}</td><td class="hidden-col col-extensao">${r.ext}</td><td class="hidden-col col-metaqtd num">${fmt(r.meta)}</td><td class="hidden-col col-metagb num">${fmt(r.metaGB,2)}</td>`;
+      <td class="num">${fmt(r.tam,2)}</td><td class="num">${fmt(r.valor,2)}</td><td class="num">${fmt(r.exc)}</td><td class="num">${fmt(r.storage)}</td><td class="num">${fmt(r.repo,2)}</td>`;
       body.appendChild(tr);
     });
   }
   document.getElementById("resultCount").textContent=`${data.length} registro(s) consolidados`;
   document.getElementById("pageIndicator").textContent=currentPage;document.getElementById("pageTotal").textContent=`de ${totalPages}`;
-  document.querySelectorAll("#columnsPop input[data-col]").forEach(cb=>document.querySelectorAll(".col-"+cb.dataset.col).forEach(el=>el.classList.toggle("hidden-col",!cb.checked)));
-
-  const onlyActive = activeFilters.status==="Ativo";
-  const onlyVersioned = activeFilters.status==="Versionado";
-  document.querySelectorAll(".status-col-active").forEach(el=>{el.style.display = onlyVersioned ? "none" : "";});
-  document.querySelectorAll(".status-col-versioned").forEach(el=>{el.style.display = onlyActive ? "none" : "";});
 }
 function labelDateField(v){return v==="created"?"criação":v==="updated"?"atualização":"versão"}
 function renderSummary(){
-  const f=activeFilters;const parts=[];
-  if(f.cliente)parts.push("Cliente: "+f.cliente);
-  if(f.projeto)parts.push("Projeto: "+f.projeto);
-  if(f.objeto)parts.push("Objeto: "+f.objeto);
-  if(f.status)parts.push("Situação: "+f.status);
-  if(f.ext)parts.push("Tipo: "+f.ext);
-  if(f.versionScope)parts.push("Versão: "+({active:"ativa",first:"primeira",last:"última"}[f.versionScope]));
-  parts.push(`Data de ${labelDateField(f.dateField)}: ${f.start||"início"} a ${f.end||"fim"}`);
+  const f=activeFilters;
+  const parts=[`Cliente: ${f.cliente||"Todos os clientes"}`,`Projeto: ${f.projeto||"Todos os projetos"}`,`Data de criação: ${f.start||"início"} a ${f.end||"fim"}`];
   document.getElementById("filterSummary").textContent=parts.join(" | ");
-  document.getElementById("bucketSummary").textContent=`${filteredRecords.length} grupos de dados + ${filteredPhysical.length} grupos físicos`;
+  document.getElementById("bucketSummary").textContent=`${filteredRecords.length} grupo(s) de dados do cache`;
 }
-function renderAll(){renderKPIs();renderSummary();renderTable();updatePreview()}
-function switchTab(t){currentTab=t;currentPage=1;document.getElementById("tabProjeto").classList.toggle("active",t==="projeto");document.getElementById("tabCliente").classList.toggle("active",t==="cliente");renderTable();updatePreview()}
+function renderAll(){renderKPIs();renderSummary();renderTable();updateReportScope();updateReportSummary()}
+function switchTab(t){currentTab=t;currentPage=1;document.getElementById("tabProjeto").classList.toggle("active",t==="projeto");document.getElementById("tabCliente").classList.toggle("active",t==="cliente");renderTable()}
 function toggleColumns(){document.getElementById("columnsPop").classList.toggle("open")}
 function toggleColumn(cb){document.querySelectorAll(".col-"+cb.dataset.col).forEach(el=>el.classList.toggle("hidden-col",!cb.checked))}
 function toggleAdvanced(){document.getElementById("advanced").classList.toggle("open")}
-function tableSearchChanged(){currentPage=1;renderTable();updatePreview()}
+function tableSearchChanged(){currentPage=1;renderTable()}
 function pageSizeChanged(){currentPage=1;renderTable()}
 function goPage(dir){
   const q=document.getElementById("tableSearch").value.trim().toLowerCase();
@@ -1304,43 +721,92 @@ function goPage(dir){
   const ps=+document.getElementById("pageSize").value||10;const total=Math.max(1,Math.ceil(data.length/ps));
   if(dir==="first")currentPage=1;if(dir==="prev")currentPage=Math.max(1,currentPage-1);if(dir==="next")currentPage=Math.min(total,currentPage+1);if(dir==="last")currentPage=total;renderTable();
 }
-function openDrawer(){document.getElementById("drawer").classList.add("open");updatePreview()}
+function openDrawer(){
+  document.getElementById("drawer").classList.add("open");
+  updateReportScope();
+  updateReportSummary();
+}
 function closeDrawer(){document.getElementById("drawer").classList.remove("open")}
 function openModal(id){document.getElementById(id).classList.add("open")}
 function closeModal(id){document.getElementById(id).classList.remove("open")}
 function updateGb(){
-  gbRate=parseFloat(document.getElementById("gbValue").value||7);renderTable();updatePreview();closeModal("gbModal");toast("Valor do GB atualizado e coluna Valor (R$) recalculada.");
+  gbRate=parseFloat(document.getElementById("gbValue").value||7);renderAll();closeModal("gbModal");toast("Valor do GB atualizado e valores recalculados.");
 }
-function saveModel(){toast("Modelo salvo no protótipo. Nenhum dado real foi alterado.")}
-function reportValue(r,key){
-  const map={cliente:r.cliente,projeto:r.projeto,qtd:fmt(r.qtd),img:fmt(r.img),vers:fmt(r.vers),ativos:fmt(r.ativos),tam:fmt(r.tam,2),valor:fmt(r.valor,2),ext:r.ext,meta:fmt(r.meta),metagb:fmt(r.metaGB,2)};
-  return map[key]??"—";
+function saveModel(){toast("Modelo salvo com sucesso. A configuração ficará disponível para reutilização em futuras gerações de relatório.",5200)}
+function reportFiltered(){
+  const obj=document.getElementById("rObjeto").value;
+  const status=document.getElementById("rStatus").value;
+  const exts=[...document.querySelectorAll(".rExt:checked")].map(x=>x.value);
+  return filteredRecords.filter(r=>(!obj||r.objeto===obj)&&(!status||r.status===status)&&exts.includes(r.ext));
 }
-function updatePreview(){
-  const box=document.getElementById("reportPreview");if(!box)return;
-  const selected=[...document.querySelectorAll("#reportFields input[type=checkbox]:checked")].map(x=>({key:x.dataset.key,label:x.dataset.label}));
-  const source=aggregate(currentTab).slice(0,3);
-  let html=`<div class="preview-head">${document.getElementById("modelName")?.value||"Relatório de Storage"} <span class="badge">${document.getElementById("reportLayout")?.value||""}</span></div>`;
-  html+=`<div class="help" style="margin-bottom:7px">${document.getElementById("filterSummary")?.textContent||""}</div>`;
-  if(!selected.length){html+='<div class="help">Selecione ao menos um campo.</div>';box.innerHTML=html;return}
-  html+='<table class="preview-table"><thead><tr>'+selected.map(f=>`<th>${f.label}</th>`).join("")+'</tr></thead><tbody>';
-  if(!source.length)html+=`<tr><td colspan="${selected.length}">Sem dados no recorte atual.</td></tr>`;
-  else source.forEach(r=>html+='<tr>'+selected.map(f=>`<td>${reportValue(r,f.key)}</td>`).join("")+'</tr>');
-  html+='</tbody></table>';box.innerHTML=html;
+function updateReportScope(){
+  const el=document.getElementById("reportScope");if(!el)return;
+  el.textContent=`Cliente: ${activeFilters.cliente||"Todos os clientes"} | Projeto: ${activeFilters.projeto||"Todos os projetos"} | Data de criação: ${activeFilters.start||"início"} a ${activeFilters.end||"fim"} | Cache: 07/10/2026 02:00`;
 }
+function updateReportSummary(){
+  const el=document.getElementById("reportSummary");if(!el)return;
+  const data=reportFiltered();
+  const groups=[...document.querySelectorAll(".rGroup:checked")].map(x=>x.value);
+  const fields=[...document.querySelectorAll("#reportFields input:checked")].length;
+  const allClients=document.getElementById("fCliente")?.value==="__ALL__";
+  const scopeWarn=allClients?`<br><span style="color:#805b16"><b>Recorte amplo:</b> Todos os clientes. O processamento em segundo plano poderá demandar mais tempo e recursos.</span>`:"";
+  el.innerHTML=`<b>Estimativa do recorte:</b> ${fmt(sum(data,"qtd"))} arquivos.<br><b>Agrupamentos:</b> ${groups.join(", ")||"Nenhum"} • <b>Campos selecionados:</b> ${fields}.${scopeWarn}`;
+}
+document.addEventListener("change",e=>{if(e.target.matches("#rObjeto,#rStatus,.rExt,.rGroup,#reportFields input"))updateReportSummary()});
 function generateReport(){
   const fields=[...document.querySelectorAll("#reportFields input[type=checkbox]:checked")];
   if(!fields.length){toast("Selecione ao menos um campo para o relatório.");return}
+  const data=reportFiltered();
+  const groups=[...document.querySelectorAll(".rGroup:checked")].map(x=>x.value);
   document.getElementById("jobName").textContent=document.getElementById("modelName").value||"Relatório de Storage";
-  document.getElementById("jobFilters").textContent=document.getElementById("filterSummary").textContent;
-  closeDrawer();openModal("downloadModal");
+  const clientScope=activeFilters.cliente||"Todos os clientes";
+  document.getElementById("jobFilters").textContent=`${clientScope} | ${activeFilters.projeto||"Todos os projetos"} | ${activeFilters.start} a ${activeFilters.end} | ${fmt(sum(data,"qtd"))} arquivos | ${fmt(sum(data,"metaGB"),2)} GB em metadados | Agrupamentos: ${groups.join(", ")||"nenhum"}`;
+  closeDrawer();
+  toast("Relatório em processamento. Assim que a geração for concluída, você receberá uma notificação por e-mail informando que o arquivo está disponível na Central de Download.",6500);
 }
-function fakeDownload(){toast("Simulação: arquivo XLSX baixado.")}
-function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800)}
-document.addEventListener("click",e=>{const pop=document.getElementById("columnsPop");if(!e.target.closest(".pop-wrap"))pop.classList.remove("open")});
 
-initFilters();
-applyFilters(false);
+function fakeDownload(){toast("Simulação: arquivo XLSX baixado.")}
+function toast(msg,duration=2800){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),duration)}
+
+function setProfile(profile){
+  currentProfile=profile;
+  document.querySelectorAll(".admin-only").forEach(el=>el.classList.toggle("admin-hidden",profile!=="admin"));
+  if(profile!=="admin" && currentTab==="cliente") switchTab("projeto");
+  document.getElementById("scopeHint").textContent=profile==="admin"?"Administrador pode consultar todos os clientes.":"Consulta limitada aos clientes e projetos permitidos ao usuário.";
+  initFilters();
+  applyFilters(false);
+}
+function updateActionAvailability(){
+  // A configuração e a geração do relatório permanecem acessíveis também no recorte "Todos os clientes".
+  // O processamento pesado, incluindo a ocupação dos metadados, ocorre exclusivamente em segundo plano.
+  document.querySelectorAll(".bottom-actions .btn").forEach(btn=>btn.disabled=false);
+}
+function renderRecipients(){
+  const body=document.getElementById("recipientBody");if(!body)return;body.innerHTML="";
+  recipients.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${i+1}</td><td>${r.name}</td><td>${r.email}</td><td><input type="checkbox" ${r.notify?"checked":""} onchange="recipients[${i}].notify=this.checked"></td><td><button class="trash" onclick="removeRecipient(${i})" title="Excluir">🗑</button></td>`;
+    body.appendChild(tr);
+  });
+}
+function addRecipient(){
+  const name=document.getElementById("newRecipientName").value.trim();
+  const email=document.getElementById("newRecipientEmail").value.trim();
+  const notify=document.getElementById("newRecipientNotify").checked;
+  if(!name||!email){toast("Informe nome e e-mail do destinatário.");return;}
+  recipients.push({name,email,notify});
+  document.getElementById("newRecipientName").value="";document.getElementById("newRecipientEmail").value="";document.getElementById("newRecipientNotify").checked=true;
+  renderRecipients();
+}
+function removeRecipient(i){recipients.splice(i,1);renderRecipients()}
+function saveRecipients(){closeModal("configModal");toast("Configurações de destinatários salvas no protótipo.")}
+const originalOpenModal=openModal;
+openModal=function(id){originalOpenModal(id);if(id==="configModal")renderRecipients()}
+
+
+document.getElementById("profileSelect").value="admin";
+setProfile("admin");
+renderRecipients();
 </script>
 </body>
 </html>
