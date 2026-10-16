@@ -6085,7 +6085,7 @@
                 <div class="clear"></div>
             </div>
         </div>
-<style id="storage-replacement-style">#rightSide{overflow:visible}#rightSide>*:not(.topNav):not(#storageReplacementFrame){display:none!important}#storageReplacementFrame{display:block!important;position:fixed!important;top:14px!important;left:102px!important;width:calc(100vw - 102px)!important;height:calc(100vh - 14px)!important;border:0!important;background:transparent!important;z-index:1000!important}</style>
+<style id="storage-replacement-style">#rightSide{overflow:visible}#rightSide>.topNav{display:block!important;position:fixed!important;top:0!important;left:0!important;width:100%!important;height:34px!important;z-index:2147483647!important;background:#2c363f!important}#rightSide>.topNav .wrapper,#rightSide>.topNav .userNav,#rightSide>.topNav .userNav ul,#rightSide>.topNav .userNav ul li{height:34px!important}#rightSide>*:not(.topNav):not(#storageReplacementFrame){display:none!important}#storageReplacementFrame{display:block!important;position:fixed!important;top:14px!important;left:102px!important;width:calc(100vw - 102px)!important;height:calc(100vh - 14px)!important;border:0!important;background:transparent!important;z-index:1000!important}</style>
 <iframe id="storageReplacementFrame" title="Storage DocZ" style="display:block;position:fixed;top:14px;left:162px;width:calc(100vw - 162px);height:calc(100vh - 14px);border:0;background:transparent;z-index:1000" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;pt-BR&quot;&gt;
 &lt;head&gt;
@@ -6148,7 +6148,7 @@ th{position:sticky;top:0;background:#f7f9fb;color:#536174;font-weight:700;z-inde
 .pages{display:flex;align-items:center;gap:5px}.page{border:1px solid #cbd5df;background:#fff;border-radius:3px;padding:5px 8px;cursor:pointer}.page.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .bottom-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;flex-wrap:wrap}
 .badge.new{background:var(--blue2);color:var(--blue);font-weight:700}
-.drawer{position:fixed;top:0;right:-460px;width:460px;height:100vh;background:#fff;border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(29,45,65,.14);z-index:20;transition:.25s;display:flex;flex-direction:column}
+.drawer{position:fixed;top:34px;right:-460px;width:460px;height:calc(100vh - 34px);background:#fff;border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(29,45,65,.14);z-index:20;transition:.25s;display:flex;flex-direction:column}
 .drawer.open{right:0}.drawer-head{padding:17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.drawer-body{padding:15px;overflow:auto;flex:1}
 .drawer-foot{padding:12px 15px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}.drawer h2{margin:0;font-size:18px}
 .x{border:0;background:none;font-size:23px;cursor:pointer;color:#617083}.block-title{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#7a8796;margin:16px 0 8px;font-weight:700}
@@ -6335,8 +6335,7 @@ body{padding-top:45px}
     &lt;/div&gt;
     &lt;div class=&quot;admin-actions&quot;&gt;
       &lt;div class=&quot;profile-sim&quot;&gt;&lt;span&gt;Perfil&lt;/span&gt;&lt;select id=&quot;profileSelect&quot; onchange=&quot;setProfile(this.value)&quot;&gt;&lt;option value=&quot;admin&quot;&gt;Administrador&lt;/option&gt;&lt;option value=&quot;operation&quot;&gt;Operação / Gerente&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
-      &lt;button class=&quot;btn admin-only&quot; onclick=&quot;openModal(&#x27;gbModal&#x27;)&quot;&gt;Atualizar Valor do GB&lt;/button&gt;
-      &lt;button class=&quot;btn admin-only&quot; onclick=&quot;openModal(&#x27;configModal&#x27;)&quot;&gt;Configurações&lt;/button&gt;
+
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -6432,6 +6431,8 @@ body{padding-top:45px}
 
   &lt;div class=&quot;bottom-actions&quot;&gt;
     &lt;button class=&quot;btn primary&quot; onclick=&quot;openDrawer()&quot;&gt;Configurar e Gerar Relatório&lt;/button&gt;
+    &lt;button class=&quot;btn admin-only&quot; onclick=&quot;openModal(&#x27;gbModal&#x27;)&quot;&gt;Atualizar Valor do GB&lt;/button&gt;
+    &lt;button class=&quot;btn admin-only&quot; onclick=&quot;openModal(&#x27;configModal&#x27;)&quot;&gt;Configurações&lt;/button&gt;
   &lt;/div&gt;
 &lt;/main&gt;
 
